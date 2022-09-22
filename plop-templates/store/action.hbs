@@ -1,0 +1,14 @@
+import {createAction, createAsyncThunk} from '@reduxjs/toolkit';
+
+export const enum {{constantCase store}}_ACTION {
+    SYNC = 'SYNC',
+    ASYNC = 'ASYNC'
+}
+
+export const syncAction = createAction({{constantCase store}}_ACTION.SYNC, (payload) => {
+    return { payload }
+})
+
+export const asyncAction = createAsyncThunk({{constantCase store}}_ACTION.ASYNC, async (params: any, thunkAPI) => {
+    // TODO call api
+});

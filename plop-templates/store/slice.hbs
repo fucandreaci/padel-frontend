@@ -1,0 +1,23 @@
+import {createSlice} from '@reduxjs/toolkit';
+
+const {{camelCase store}}Store = createSlice({
+    name: '{{camelCase store}}',
+    initialState: {
+
+    },
+    reducers: {
+        void: (state) => {
+            // TODO something
+        }
+    }
+});
+
+export const {
+    void: changeName,
+} = {{camelCase store}}Store.actions;
+
+export const {{camelCase store}}Reducer = {
+    {{camelCase store}}: {{camelCase store}}Store.reducer
+};
+
+export default {{camelCase store}}Store;

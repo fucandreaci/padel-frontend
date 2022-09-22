@@ -1,0 +1,29 @@
+import {createReducer} from '@reduxjs/toolkit';
+import { asyncAction, syncAction } from './{{store}}.action'
+import { {{pascalCase store}}State } from './types';
+
+const initialState: {{pascalCase store}}State = {
+
+};
+
+export const {{camelCase store}}Reducer = createReducer(initialState, (builder) => {
+    builder.addCase(syncAction, (state, action) => {
+        return state
+    });
+
+    builder.addCase(asyncAction.pending, (state, action) => {
+        // TODO something when promise is in pending
+    });
+
+    builder.addCase(asyncAction.fulfilled, (state, action) => {
+        // TODO something when promise is resolved
+    });
+
+    builder.addCase(asyncAction.rejected, (state, action) => {
+        // TODO something when promise is rejected
+    });
+
+    builder.addDefaultCase((state, action) => {
+        return state;
+    });
+});

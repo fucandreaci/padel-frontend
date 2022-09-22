@@ -1,0 +1,16 @@
+import React from 'react';
+import './{{camelCase componentName}}.scss'
+
+interface {{pascalCase componentName}}Props{
+}
+
+const componentClassName = '{{dashCase componentName}}';
+
+export const {{pascalCase componentName}} = (props: {{pascalCase componentName}}Props) => {
+
+    return (
+    <div className={`${componentClassName}`}>
+        {/*your content here*/}
+    </div>
+    )
+};
