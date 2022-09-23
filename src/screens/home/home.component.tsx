@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './home.scss'
 import {
+    Alert,
     AppBar,
     Box,
     Button,
@@ -10,13 +11,16 @@ import {
     List,
     ListItem,
     ListItemButton,
-    ListItemText,
+    ListItemText, Snackbar,
     Toolbar,
     Typography
 } from '@mui/material';
 import {Menu} from '@mui/icons-material';
 import {UserPages} from 'navigation/pages';
 import {utility} from 'utils/utility';
+import {HomeSection} from './components/homeSection/homeSection.component';
+import {useCheckUser} from './checkUser.hook';
+import customHistory from '../../navigation/customHistory.config';
 
 interface HomeProps{
     window?: () => Window;
@@ -28,6 +32,15 @@ export const Home = (props: HomeProps) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [selectedPage, setSelectedPage] = useState<UserPages>(UserPages.HOME);
+
+    const [_, error] = useCheckUser();
+
+    useEffect(() => {
+        if (error !== undefined) {
+            customHistory.push('/login');
+        }
+    }, [error]);
+
 
     const constDrawer = (
         <Box onClick={() => setMobileOpen(!mobileOpen)} sx={{ textAlign: 'center' }}>
@@ -50,7 +63,7 @@ export const Home = (props: HomeProps) => {
     const renderPage = () => {
         switch (selectedPage) {
             case UserPages.HOME:
-                return <div>Home</div>;
+                return <HomeSection setSelectedPage={setSelectedPage}/>;
             case UserPages.INFORMAZIONI:
                 return <div>Informazioni</div>;
             case UserPages.PRENOTAZIONE:
@@ -120,9 +133,7 @@ export const Home = (props: HomeProps) => {
             </Box>
             <Box component="main" sx={{ p: 3 }}>
                 <Toolbar />
-                <Typography>
                     {renderPage()}
-                </Typography>
             </Box>
         </Box>
     </div>
