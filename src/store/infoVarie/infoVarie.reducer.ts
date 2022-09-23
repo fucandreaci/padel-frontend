@@ -4,6 +4,7 @@ import {infoVarieAction} from './infoVarie.action';
 
 const initialState: InfoVarieState = {
     infoVarie: [],
+    orariStruttura: [],
     isLoading: false,
 };
 
@@ -19,7 +20,8 @@ export const infoVarieReducer = {
         builder.addCase(infoVarieAction.fetchInfoVarie.fulfilled, (state, action) => {
             return {
                 ...state,
-                infoVarie: action.payload,
+                infoVarie: action.payload.infoVarie,
+                orariStruttura: action.payload.orariStruttura,
                 isLoading: false,
                 error: undefined
             }

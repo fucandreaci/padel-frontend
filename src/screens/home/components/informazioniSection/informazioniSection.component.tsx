@@ -3,10 +3,11 @@ import './informazioniSection.scss'
 import {Alert, AlertTitle, Typography} from '@mui/material';
 import {InfoCard} from 'shared/components/infoCard/infoCard.component';
 import {useAppDispatch} from 'store/store.config';
-import {InfoVarie} from 'models/informazioni';
+import {InfoVarie, OrariStruttura} from 'models/informazioni';
 import {useSelector} from 'react-redux';
 import {infoVarieSelector} from 'store/infoVarie/infoVarie.selector';
 import {infoVarieAction} from 'store/infoVarie/infoVarie.action';
+import {OrariCard} from './components/orariCard/orariCard.component';
 
 interface InformazioniSectionProps {
 }
@@ -17,13 +18,14 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
     const dispatch = useAppDispatch();
 
     const infoVarie: InfoVarie[] = useSelector(infoVarieSelector.getInfoVarie);
+    const orariStruttura: OrariStruttura[] = useSelector(infoVarieSelector.getOrariStruttura);
     const isLoading: boolean = useSelector(infoVarieSelector.isLoading);
     const error: string | undefined = useSelector(infoVarieSelector.getError);
 
     useEffect(() => {
         dispatch(infoVarieAction.fetchInfoVarie());
     }, []);
-    
+
     return (
         <div className={`${componentClassName}`}>
             <Typography component={'p'} variant="h3" align={'center'} gutterBottom>
@@ -40,7 +42,7 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
             }
 
             {
-                !isLoading && error === undefined && !infoVarie.length &&
+                !isLoading && error === undefined && !infoVarie.length && !orariStruttura.length &&
                 (
                     <Alert severity="info">
                         <AlertTitle>Info</AlertTitle>
@@ -51,8 +53,15 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
 
             {
                 !isLoading && error === undefined && infoVarie.map((item, index) => (
-                    <InfoCard key={index} descrizione={item.descrizione} titolo={item.nome} sottoTitolo={'Fonte Nuova Padel Club'}/>
+                    <InfoCard key={index} descrizione={item.descrizione} titolo={item.nome}
+                              sottoTitolo={'Fonte Nuova Padel Club'}/>
                 ))
+            }
+
+            {
+                !isLoading && error === undefined && orariStruttura.length && (
+                    <OrariCard titolo={'Orari di apertura'} orari={orariStruttura}/>
+                )
             }
         </div>
     )

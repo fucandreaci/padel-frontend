@@ -8,8 +8,14 @@ export const enum INFO_VARIE_ACTION {
 
 const fetchInfoVarie = createAsyncThunk(INFO_VARIE_ACTION.FETCH_INFO_VARIE, async () => {
     try {
-        const response = await informazioniService.getInfoVarie()
-        return response.data;
+        const responseInfo = await informazioniService.getInfoVarie()
+        const responseOrari = await informazioniService.getOrariStruttura()
+
+        return {
+            infoVarie: responseInfo.data,
+            orariStruttura: responseOrari.data
+        }
+
     } catch (e) {
         const msg = utility.getErrorMessage(e);
         throw new Error(msg);
