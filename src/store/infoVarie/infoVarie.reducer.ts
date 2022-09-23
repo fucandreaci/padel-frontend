@@ -1,6 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 import { InfoVarieState } from './types';
 import {infoVarieAction} from './infoVarie.action';
+import {utility} from '../../utils/utility';
 
 const initialState: InfoVarieState = {
     infoVarie: [],

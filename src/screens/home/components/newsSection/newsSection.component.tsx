@@ -18,6 +18,7 @@ export const NewsSection = (props: NewsSectionProps) => {
     
     const news: InfoVarie[] = useSelector(newsSelector.getNews);
     const isLoading: boolean = useSelector(newsSelector.isLoading);
+    const error: string | undefined = useSelector(newsSelector.getError);
 
     useEffect(() => {
         dispatch(newsAction.fetchNews());
@@ -29,7 +30,16 @@ export const NewsSection = (props: NewsSectionProps) => {
                 News
             </Typography>
             {
-                !isLoading && !news.length &&
+                !isLoading && error !== undefined && (
+                    <Alert severity="error">
+                        <AlertTitle>Si è verificato un errore!</AlertTitle>
+                        {error}
+                    </Alert>
+                )
+            }
+
+            {
+                !isLoading && !news.length && error === undefined &&
                 (
                     <Alert severity="info">
                         <AlertTitle>Info</AlertTitle>
@@ -39,8 +49,8 @@ export const NewsSection = (props: NewsSectionProps) => {
             }
 
             {
-                !isLoading && news.map((item) => (
-                    <InfoCard descrizione={item.descrizione} titolo={'News'} sottoTitolo={'Fonte Nuova Padel Club'}/>
+                !isLoading && error === undefined && news.map((item, index) => (
+                    <InfoCard key={index} descrizione={item.descrizione} titolo={'News'} sottoTitolo={'Fonte Nuova Padel Club'}/>
                 ))
             }
 

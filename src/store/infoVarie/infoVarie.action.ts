@@ -1,5 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {informazioniService} from 'api/informazioni.service';
+import {utility} from 'utils/utility';
 
 export const enum INFO_VARIE_ACTION {
     'FETCH_INFO_VARIE' = 'FETCH_INFO_VARIE',
@@ -10,8 +11,8 @@ const fetchInfoVarie = createAsyncThunk(INFO_VARIE_ACTION.FETCH_INFO_VARIE, asyn
         const response = await informazioniService.getInfoVarie()
         return response.data;
     } catch (e) {
-        console.log(e)
-        throw e;
+        const msg = utility.getErrorMessage(e);
+        throw new Error(msg);
     }
 });
 

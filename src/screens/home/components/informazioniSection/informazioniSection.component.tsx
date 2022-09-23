@@ -18,6 +18,7 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
 
     const infoVarie: InfoVarie[] = useSelector(infoVarieSelector.getInfoVarie);
     const isLoading: boolean = useSelector(infoVarieSelector.isLoading);
+    const error: string | undefined = useSelector(infoVarieSelector.getError);
 
     useEffect(() => {
         dispatch(infoVarieAction.fetchInfoVarie());
@@ -28,8 +29,18 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
             <Typography component={'p'} variant="h3" align={'center'} gutterBottom>
                 Informazioni
             </Typography>
+
             {
-                !isLoading && !infoVarie.length &&
+                !isLoading && error !== undefined && (
+                    <Alert severity="error">
+                        <AlertTitle>Si è verificato un errore!</AlertTitle>
+                        {error}
+                    </Alert>
+                )
+            }
+
+            {
+                !isLoading && error === undefined && !infoVarie.length &&
                 (
                     <Alert severity="info">
                         <AlertTitle>Info</AlertTitle>
@@ -39,8 +50,8 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
             }
 
             {
-                !isLoading && infoVarie.map((item) => (
-                    <InfoCard descrizione={item.descrizione} titolo={'Info'} sottoTitolo={'Fonte Nuova Padel Club'}/>
+                !isLoading && error === undefined && infoVarie.map((item, index) => (
+                    <InfoCard key={index} descrizione={item.descrizione} titolo={item.nome} sottoTitolo={'Fonte Nuova Padel Club'}/>
                 ))
             }
         </div>
