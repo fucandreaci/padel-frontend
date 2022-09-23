@@ -3,6 +3,7 @@ import {Route, Router, Switch} from 'react-router-dom';
 import customHistory from './navigation/customHistory.config';
 import {Login} from './screens/login/login.component';
 import {Signup} from './screens/signup/signup.component';
+import {Home} from './screens/home/home.component';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
               <Signup />
           </Route>
           <Route path="/home" exact={true}>
+              <Home />
           </Route>
         </Switch>
       </Router>

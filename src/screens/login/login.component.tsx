@@ -27,7 +27,7 @@ export const Login = (props: LoginProps) => {
     const [user, setUser] = useState<RequestLoginDto>();
     const [openToast, setOpenToast] = useState(false);
 
-    const [isLoading, error, data] = useLogin(user);
+    const [, error, data] = useLogin(user);
 
     useEffect(() => {
         setOpenToast(error !== undefined);
@@ -60,6 +60,9 @@ export const Login = (props: LoginProps) => {
     return (
     <div className={`${componentClassName}`}>
         <Container component="main" maxWidth="xs">
+            <Typography variant="h3" align={'center'} marginTop={5} gutterBottom>
+                Padel
+            </Typography>
             <CssBaseline />
             <Box
                 sx={{

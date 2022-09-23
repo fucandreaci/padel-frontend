@@ -33,7 +33,7 @@ export const Signup = (props: SignupProps) => {
     const [openToast, setOpenToast] = useState(false);
     const [openToastSuccess, setOpenToastSuccess] = useState(false);
 
-    const [isLoading, error, data] = useSignup(user);
+    const [, error, data] = useSignup(user);
     const onSubmit = () => {
         const user: RequestSignupDto = {
             nome,
@@ -78,6 +78,9 @@ export const Signup = (props: SignupProps) => {
     return (
     <div className={`${componentClassName}`}>
         <Container component="main" maxWidth="xs">
+            <Typography variant="h3" align={'center'} marginTop={5} gutterBottom>
+                Padel
+            </Typography>
             <CssBaseline />
             <Box
                 sx={{
