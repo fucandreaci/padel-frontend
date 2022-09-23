@@ -22,6 +22,7 @@ import {useCheckUser} from './checkUser.hook';
 import customHistory from 'navigation/customHistory.config';
 import {NewsSection} from './components/newsSection/newsSection.component';
 import {InformazioniSection} from './components/informazioniSection/informazioniSection.component';
+import {ContattiSection} from './components/contattiSection/contattiSection.component';
 
 interface HomeProps{
     window?: () => Window;
@@ -76,7 +77,7 @@ export const Home = (props: HomeProps) => {
             case UserPages.PROFILO:
                 return <div>Profilo</div>;
             case UserPages.CONTATTI:
-                return <div>Contatti</div>;
+                return <ContattiSection />;
             case UserPages.NEWS:
                 return <NewsSection/>;
             default:
