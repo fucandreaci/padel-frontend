@@ -10,10 +10,12 @@ const fetchInfoVarie = createAsyncThunk(INFO_VARIE_ACTION.FETCH_INFO_VARIE, asyn
     try {
         const responseInfo = await informazioniService.getInfoVarie()
         const responseOrari = await informazioniService.getOrariStruttura()
+        const responseRegole = await informazioniService.getRegole()
 
         return {
             infoVarie: responseInfo.data,
-            orariStruttura: responseOrari.data
+            orariStruttura: responseOrari.data,
+            regole: responseRegole.data
         }
 
     } catch (e) {

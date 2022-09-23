@@ -18,9 +18,14 @@ const getOrariStruttura = (): Promise<AxiosResponse<OrariStruttura[]>> => {
     return axios.get("/informazioni/getOrari", tokenUtils.getHeader());
 }
 
+const getRegole = (): Promise<AxiosResponse<InfoVarie[]>> => {
+    return axios.get("/informazioni/getRegole", tokenUtils.getHeader());
+}
+
 export const informazioniService = {
     getNews,
     getInfoVarie,
     getContatti,
-    getOrariStruttura
+    getOrariStruttura,
+    getRegole
 }

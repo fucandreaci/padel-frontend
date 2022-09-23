@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux';
 import {infoVarieSelector} from 'store/infoVarie/infoVarie.selector';
 import {infoVarieAction} from 'store/infoVarie/infoVarie.action';
 import {OrariCard} from './components/orariCard/orariCard.component';
+import {RegoleCard} from './components/regoleCard/regoleCard.component';
 
 interface InformazioniSectionProps {
 }
@@ -19,6 +20,7 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
 
     const infoVarie: InfoVarie[] = useSelector(infoVarieSelector.getInfoVarie);
     const orariStruttura: OrariStruttura[] = useSelector(infoVarieSelector.getOrariStruttura);
+    const regole: InfoVarie[] = useSelector(infoVarieSelector.getRegole);
     const isLoading: boolean = useSelector(infoVarieSelector.isLoading);
     const error: string | undefined = useSelector(infoVarieSelector.getError);
 
@@ -61,6 +63,12 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
             {
                 !isLoading && error === undefined && orariStruttura.length && (
                     <OrariCard titolo={'Orari di apertura'} orari={orariStruttura}/>
+                )
+            }
+
+            {
+                !isLoading && error === undefined && regole.length && (
+                    <RegoleCard titolo={'Regole'} regole={regole}/>
                 )
             }
         </div>
