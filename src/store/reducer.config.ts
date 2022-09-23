@@ -3,11 +3,13 @@ import {AppAction} from './types';
 import {newsReducer} from './news/news.reducer';
 import {infoVarieReducer} from './infoVarie/infoVarie.reducer';
 import {contattiReducer} from './contatti/contatti.reducer';
+import {prenotazioniReducer} from './prenotazioni/prenotazioni.reducer';
 
 const appReducer = combineReducers({
     ...newsReducer,
     ...infoVarieReducer,
-    ...contattiReducer
+    ...contattiReducer,
+    ...prenotazioniReducer
 });
 
 export const RESET_STORE = 'RESET_STORE';

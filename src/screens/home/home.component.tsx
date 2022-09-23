@@ -23,6 +23,7 @@ import customHistory from 'navigation/customHistory.config';
 import {NewsSection} from './components/newsSection/newsSection.component';
 import {InformazioniSection} from './components/informazioniSection/informazioniSection.component';
 import {ContattiSection} from './components/contattiSection/contattiSection.component';
+import {PrenotazioniSection} from './components/prenotazioniSection/prenotazioniSection.component';
 
 interface HomeProps{
     window?: () => Window;
@@ -69,7 +70,7 @@ export const Home = (props: HomeProps) => {
             case UserPages.INFORMAZIONI:
                 return <InformazioniSection />;
             case UserPages.PRENOTAZIONE:
-                return <div>Prenotazione</div>;
+                return <PrenotazioniSection />;
             case UserPages.TORNEI:
                 return <div>Tornei</div>;
             case UserPages.AMICI:

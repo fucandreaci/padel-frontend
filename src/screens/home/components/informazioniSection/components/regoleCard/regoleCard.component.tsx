@@ -25,8 +25,8 @@ export const RegoleCard = (props: RegoleCardProps) => {
 
                         <List>
                             {
-                                props.regole.map((orario) => (
-                                    <ListItem>
+                                props.regole.map((orario, index) => (
+                                    <ListItem key={index}>
                                         <ListItemAvatar>
                                             <Avatar>
                                                 <Rule />

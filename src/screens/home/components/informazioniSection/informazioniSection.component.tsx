@@ -61,13 +61,13 @@ export const InformazioniSection = (props: InformazioniSectionProps) => {
             }
 
             {
-                !isLoading && error === undefined && orariStruttura.length && (
+                !isLoading && error === undefined && orariStruttura.length > 0 && (
                     <OrariCard titolo={'Orari di apertura'} orari={orariStruttura}/>
                 )
             }
 
             {
-                !isLoading && error === undefined && regole.length && (
+                !isLoading && error === undefined && regole.length > 0 && (
                     <RegoleCard titolo={'Regole'} regole={regole}/>
                 )
             }
