@@ -21,6 +21,7 @@ import {HomeSection} from './components/homeSection/homeSection.component';
 import {useCheckUser} from './checkUser.hook';
 import customHistory from 'navigation/customHistory.config';
 import {NewsSection} from './components/newsSection/newsSection.component';
+import {InformazioniSection} from './components/informazioniSection/informazioniSection.component';
 
 interface HomeProps{
     window?: () => Window;
@@ -65,7 +66,7 @@ export const Home = (props: HomeProps) => {
             case UserPages.HOME:
                 return <HomeSection setSelectedPage={setSelectedPage}/>;
             case UserPages.INFORMAZIONI:
-                return <div>Informazioni</div>;
+                return <InformazioniSection />;
             case UserPages.PRENOTAZIONE:
                 return <div>Prenotazione</div>;
             case UserPages.TORNEI:

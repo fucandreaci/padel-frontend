@@ -22,7 +22,6 @@ export const NewsSection = (props: NewsSectionProps) => {
     useEffect(() => {
         dispatch(newsAction.fetchNews());
     }, []);
-
     
     return (
         <div className={`${componentClassName}`}>

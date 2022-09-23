@@ -1,9 +1,11 @@
 import {combineReducers} from 'redux';
 import {AppAction} from './types';
 import {newsReducer} from './news/news.reducer';
+import {infoVarieReducer} from './infoVarie/infoVarie.reducer';
 
 const appReducer = combineReducers({
-    ...newsReducer
+    ...newsReducer,
+    ...infoVarieReducer
 });
 
 export const RESET_STORE = 'RESET_STORE';

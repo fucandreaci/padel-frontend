@@ -6,6 +6,11 @@ const getNews = (): Promise<AxiosResponse<InfoVarie[]>> => {
     return axios.get("/informazioni/getNews", tokenUtils.getHeader());
 }
 
+const getInfoVarie = (): Promise<AxiosResponse<InfoVarie[]>> => {
+    return axios.get("/informazioni/getInfoVarie", tokenUtils.getHeader());
+}
+
 export const informazioniService = {
-    getNews
+    getNews,
+    getInfoVarie
 }
