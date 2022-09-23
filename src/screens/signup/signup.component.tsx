@@ -16,7 +16,7 @@ import {
 import {LockOutlined} from '@mui/icons-material';
 import {useSignup} from './signup.hook';
 import {RequestSignupDto} from 'models/utente';
-import customHistory from '../../navigation/customHistory.config';
+import customHistory from 'navigation/customHistory.config';
 
 interface SignupProps{
 }

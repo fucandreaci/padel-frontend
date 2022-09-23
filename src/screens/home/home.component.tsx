@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './home.scss'
 import {
-    Alert,
     AppBar,
     Box,
     Button,
@@ -11,7 +10,7 @@ import {
     List,
     ListItem,
     ListItemButton,
-    ListItemText, Snackbar,
+    ListItemText,
     Toolbar,
     Typography
 } from '@mui/material';
@@ -20,7 +19,8 @@ import {UserPages} from 'navigation/pages';
 import {utility} from 'utils/utility';
 import {HomeSection} from './components/homeSection/homeSection.component';
 import {useCheckUser} from './checkUser.hook';
-import customHistory from '../../navigation/customHistory.config';
+import customHistory from 'navigation/customHistory.config';
+import {NewsSection} from './components/newsSection/newsSection.component';
 
 interface HomeProps{
     window?: () => Window;
@@ -77,9 +77,9 @@ export const Home = (props: HomeProps) => {
             case UserPages.CONTATTI:
                 return <div>Contatti</div>;
             case UserPages.NEWS:
-                return <div>News</div>;
+                return <NewsSection/>;
             default:
-                return <div>Home</div>;
+                return <HomeSection setSelectedPage={setSelectedPage}/>;
         }
     }
 
@@ -131,7 +131,7 @@ export const Home = (props: HomeProps) => {
                     {constDrawer}
                 </Drawer>
             </Box>
-            <Box component="main" sx={{ p: 3 }}>
+            <Box component="main" sx={{ p: 3 }} width={'100%'}>
                 <Toolbar />
                     {renderPage()}
             </Box>

@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux';
 import {AppAction} from './types';
+import {newsReducer} from './news/news.reducer';
 
 const appReducer = combineReducers({
-
+    ...newsReducer
 });
 
 export const RESET_STORE = 'RESET_STORE';

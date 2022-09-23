@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {RequestLoginDto, RequestSignupDto, ResponseLoginDto} from 'models/utente';
-import {tokenUtils} from '../utils/token.utils';
+import {tokenUtils} from 'utils/token.utils';
 
 const login = (dto: RequestLoginDto): Promise<AxiosResponse<ResponseLoginDto>> => {
     return axios.post("/auth/login", dto);
