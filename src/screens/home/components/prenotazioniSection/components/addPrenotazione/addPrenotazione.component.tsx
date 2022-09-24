@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './addPrenotazione.scss'
-import {Dialog, DialogContent, DialogTitle, Stack} from '@mui/material';
+import {Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, Stack} from '@mui/material';
 import {SelectCampi} from './components/selectCampi/selectCampi.component';
 import {ResponseCampoDto} from 'models/campi';
 import {DateTimePickerPrenotazione} from './components/dateTimePickerPrenotazione/dateTimePickerPrenotazione.component';
@@ -18,6 +18,7 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
     const [selectedCampo, setSelectedCampo] = useState<ResponseCampoDto | undefined>();
     const [da, setDa] = useState<Dayjs|null>(null);
     const [a, setA] = useState<Dayjs|null>(null);
+    const [isLezionePrivata, setIsLezionePrivata] = useState<boolean>(false);
 
     const log = (reason: DateTimeValidationError, value: Dayjs | null) => {
         console.log(reason, value);
@@ -33,7 +34,7 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
             open={props.open}
             onClose={() => props.setOpen(false)}
         >
-            <DialogTitle>Prenota una partita</DialogTitle>
+            <DialogTitle>{isLezionePrivata ? 'Prenota una lezione privata' : 'Prenota una partita'}</DialogTitle>
             <DialogContent>
                 <Stack spacing={2}>
                     <SelectCampi setSelectedCampo={setSelectedCampo} selectedCampo={selectedCampo} />
@@ -42,6 +43,8 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
                         <DateTimePickerPrenotazione value={da} setValue={setDa} label={'Da'} minDate={now} onError={log}/>
                         <DateTimePickerPrenotazione value={a} setValue={setA} label={'A'} minDate={da != null ? da : undefined} onError={log}/>
                     </Stack>
+
+                    <FormControlLabel control={<Checkbox checked={isLezionePrivata} onChange={(_, checked) => setIsLezionePrivata(checked)}/>} label="Voglio un maestro privato" />
                 </Stack>
             </DialogContent>
         </Dialog>
