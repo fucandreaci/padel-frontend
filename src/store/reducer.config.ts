@@ -5,13 +5,15 @@ import {infoVarieReducer} from './infoVarie/infoVarie.reducer';
 import {contattiReducer} from './contatti/contatti.reducer';
 import {prenotazioniReducer} from './prenotazioni/prenotazioni.reducer';
 import {campiReducer} from './campi/campi.reducer';
+import {maestriReducer} from './maestri/maestri.reducer';
 
 const appReducer = combineReducers({
     ...newsReducer,
     ...infoVarieReducer,
     ...contattiReducer,
     ...prenotazioniReducer,
-    ...campiReducer
+    ...campiReducer,
+    ...maestriReducer
 });
 
 export const RESET_STORE = 'RESET_STORE';

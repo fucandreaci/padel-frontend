@@ -3,7 +3,7 @@ import './prenotazioneDetail.scss'
 import {PrenotazioneType, ResponsePrenotazioneWithTypeDto} from 'models/prenotazioni';
 import {Box, Button, Card, CardActions, CardContent, Chip, Typography} from '@mui/material';
 import {SportsTennis} from '@mui/icons-material';
-import {utility} from '../../../../../../utils/utility';
+import {utility} from 'utils/utility';
 
 interface PrenotazioneDetailProps {
     prenotazione: ResponsePrenotazioneWithTypeDto
