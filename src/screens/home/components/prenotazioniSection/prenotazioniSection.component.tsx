@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './prenotazioniSection.scss'
 import {useAppDispatch} from 'store/store.config';
 import {useSelector} from 'react-redux';
@@ -8,6 +8,7 @@ import {Alert, AlertTitle, Fab, Typography} from '@mui/material';
 import {prenotazioniAction} from 'store/prenotazioni/prenotazioni.action';
 import {PrenotazioneDetail} from './components/prenotazioneDetail/prenotazioneDetail.component';
 import {Add} from '@mui/icons-material';
+import {AddPrenotazione} from './components/addPrenotazione/addPrenotazione.component';
 
 interface PrenotazioniSectionProps{
 }
@@ -16,6 +17,9 @@ const componentClassName = 'prenotazioni-section';
 
 export const PrenotazioniSection = (props: PrenotazioniSectionProps) => {
     const dispatch = useAppDispatch();
+
+    const [creationPanelOpen, setCreationPanelOpen] = useState(false);
+
     const isLoading: boolean = useSelector(prenotazioniSelector.isLoading);
     const error: string | undefined = useSelector(prenotazioniSelector.getError);
     const prenotazioni: ResponsePrenotazioneWithTypeDto[] = useSelector(prenotazioniSelector.getPrenotazioni);
@@ -65,9 +69,11 @@ export const PrenotazioniSection = (props: PrenotazioniSectionProps) => {
             ))
         }
 
-        <Fab color="primary" aria-label="add" sx={fabStyle}>
+        <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => setCreationPanelOpen(true)}>
             <Add />
         </Fab>
+
+        <AddPrenotazione open={creationPanelOpen} setOpen={setCreationPanelOpen}/>
     </div>
     )
 };

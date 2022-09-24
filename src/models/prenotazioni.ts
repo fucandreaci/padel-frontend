@@ -19,3 +19,9 @@ export enum PrenotazioneType {
     LEZIONE_PRIVATA = 'LEZIONE_PRIVATA',
     PARTITA = 'PARTITA',
 }
+
+export interface RequestPrenotazioneDto {
+    idCampo: number,
+    da: Date,
+    a: Date,
+}

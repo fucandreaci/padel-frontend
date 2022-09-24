@@ -4,12 +4,14 @@ import {newsReducer} from './news/news.reducer';
 import {infoVarieReducer} from './infoVarie/infoVarie.reducer';
 import {contattiReducer} from './contatti/contatti.reducer';
 import {prenotazioniReducer} from './prenotazioni/prenotazioni.reducer';
+import {campiReducer} from './campi/campi.reducer';
 
 const appReducer = combineReducers({
     ...newsReducer,
     ...infoVarieReducer,
     ...contattiReducer,
-    ...prenotazioniReducer
+    ...prenotazioniReducer,
+    ...campiReducer
 });
 
 export const RESET_STORE = 'RESET_STORE';
