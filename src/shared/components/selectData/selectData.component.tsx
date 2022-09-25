@@ -6,6 +6,7 @@ interface SelectDataProps {
     selectedItem?: SelectItem,
     setSelectedItem: (item?: SelectItem) => void,
     items: SelectItem[],
+    error: boolean,
     label: string,
     id: string,
 }
@@ -36,6 +37,7 @@ export const SelectData = (props: SelectDataProps) => {
                     value={props.selectedItem?.id || ''}
                     label={props.label}
                     onChange={handleOnChange}
+                    error={props.error}
                 >
                     <MenuItem selected={!props.selectedItem} disabled={true}>{props.label}</MenuItem>
                     {

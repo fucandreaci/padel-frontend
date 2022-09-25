@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './addPrenotazione.scss'
 import {
+    Alert,
     Button,
     Checkbox,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
-    FormControlLabel,
+    FormControlLabel, Snackbar,
     Stack
 } from '@mui/material';
 import {ResponseCampoDto} from 'models/campi';
@@ -40,6 +41,11 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
     const [da, setDa] = useState<Dayjs|null>(null);
     const [a, setA] = useState<Dayjs|null>(null);
     const [isLezionePrivata, setIsLezionePrivata] = useState<boolean>(false);
+    const [isErrorDa, setIsErrorDa] = useState<boolean>(false);
+    const [isErrorA, setIsErrorA] = useState<boolean>(false);
+    const [hasClickOnCreate, setHasClickOnCreate] = useState<boolean>(false);
+    const [errorMsg, setErrorMsg] = useState<string>();
+    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
 
     const campi: ResponseCampoDto[] = useSelector(campiSelector.getCampi)
     const maestri: ResponseMaestroDto[] = useSelector(maestriSelector.getMaestri)
@@ -48,13 +54,30 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
 
     useEffect(() => {
         dispatch(campiAction.getAll());
-    }, []);
-
-    useEffect(() => {
         dispatch(maestriAction.fetchMaestri());
     }, []);
 
-    const createPrenotazione = () => {};
+    const isDateInError = (reason: DateTimeValidationError, value: Dayjs | null) => {
+        return reason !== null || !value;
+    }
+
+    const createPrenotazione = () => {
+        setHasClickOnCreate(true);
+
+        if (!selectedCampo || isErrorDa || isErrorA || !da || !a) {
+            setErrorMsg('Controlla che tutti i campi siano validi');
+            setOpenSnackbar(true);
+            return;
+        }
+
+        if (isLezionePrivata && !selectedMaestro) {
+            setErrorMsg('Seleziona un maestro');
+            setOpenSnackbar(true);
+            return;
+        }
+
+        //TODO: dispatch
+    };
 
     return (
     <div className={`${componentClassName}`}>
@@ -73,11 +96,29 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
                         items={campiMapper.getSelectItems(campi)}
                         label={'Seleziona un campo'}
                         id={'campo-select'}
+                        error={hasClickOnCreate && !selectedCampo}
                     />
 
                     <Stack direction={'row'} spacing={2}>
-                        <DateTimePickerPrenotazione value={da} setValue={setDa} label={'Da'} minDate={now} onError={() => {}}/>
-                        <DateTimePickerPrenotazione value={a} setValue={setA} label={'A'} minDate={da != null ? da : undefined} onError={() => {}}/>
+                        <DateTimePickerPrenotazione
+                            value={da}
+                            setValue={setDa}
+                            label={'Da'}
+                            minDate={now}
+                            onError={
+                                (r, v) => setIsErrorDa(isDateInError(r, v))
+                            }
+                        />
+
+                        <DateTimePickerPrenotazione
+                            value={a}
+                            setValue={setA}
+                            label={'A'}
+                            minDate={da != null ? da : undefined}
+                            onError={
+                                (r, v) => setIsErrorA(isDateInError(r, v))
+                            }
+                        />
                     </Stack>
 
                     <FormControlLabel control={<Checkbox checked={isLezionePrivata} onChange={(_, checked) => setIsLezionePrivata(checked)}/>} label="Voglio un maestro privato" />
@@ -90,6 +131,7 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
                                 items={maestriMapper.getSelectItems(maestri)}
                                 label={'Seleziona un maestro'}
                                 id={'maestro-select'}
+                                error={hasClickOnCreate && !selectedMaestro}
                             />
                         )
                     }
@@ -101,6 +143,14 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
                 <Button onClick={createPrenotazione} variant={'contained'}>{isLezionePrivata ? 'Prenota lezione privata' : 'Prenota partita'}</Button>
             </DialogActions>
         </Dialog>
+
+        {errorMsg !== undefined && (
+            <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)} anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
+                <Alert onClose={() => setOpenSnackbar(false)} severity="error" sx={{width: '100%'}}>
+                    <>{errorMsg}</>
+                </Alert>
+            </Snackbar>)
+        }
     </div>
     )
 };
