@@ -16,8 +16,10 @@ export const PrenotazioneDetail = (props: PrenotazioneDetailProps) => {
         if (isNaN(date.getTime())) {
             return '';
         }
+
+        date = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
         const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-        const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth();
+        const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1);
         const year = date.getFullYear();
 
         return `${day}/${month}/${year}`;
@@ -27,7 +29,7 @@ export const PrenotazioneDetail = (props: PrenotazioneDetailProps) => {
         if (isNaN(date.getTime())) {
             return '';
         }
-
+        date = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
         const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
         const min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
         return `${hours}:${min}`;

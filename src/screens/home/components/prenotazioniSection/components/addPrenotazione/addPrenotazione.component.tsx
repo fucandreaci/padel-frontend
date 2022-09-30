@@ -25,6 +25,10 @@ import {maestriAction} from 'store/maestri/maestri.action';
 import {ResponseMaestroDto} from 'models/maestri';
 import {maestriSelector} from 'store/maestri/maestri.selector';
 import {maestriMapper} from 'store/maestri/maestri.mapper';
+import {prenotazioniAction} from 'store/prenotazioni/prenotazioni.action';
+import {RequestPrenotazioneDto} from 'models/prenotazioni';
+import {prenotazioniSelector} from 'store/prenotazioni/prenotazioni.selector';
+import {unwrapResult} from '@reduxjs/toolkit';
 
 interface AddPrenotazioneProps{
     open: boolean,
@@ -46,9 +50,12 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
     const [hasClickOnCreate, setHasClickOnCreate] = useState<boolean>(false);
     const [errorMsg, setErrorMsg] = useState<string>();
     const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
+    const [openSnackbarSuccess, setOpenSnackbarSuccess] = useState<boolean>(false);
 
     const campi: ResponseCampoDto[] = useSelector(campiSelector.getCampi)
     const maestri: ResponseMaestroDto[] = useSelector(maestriSelector.getMaestri)
+
+    const error = useSelector(prenotazioniSelector.getErrorInsert)
 
     const now: Dayjs = dayjs();
 
@@ -57,11 +64,19 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
         dispatch(maestriAction.fetchMaestri());
     }, []);
 
+    useEffect(() => {
+        if (error !== undefined) {
+            setErrorMsg(error);
+            setOpenSnackbar(true);
+        }
+    }, [error]);
+
+
     const isDateInError = (reason: DateTimeValidationError, value: Dayjs | null) => {
         return reason !== null || !value;
     }
 
-    const createPrenotazione = () => {
+    const createPrenotazione = async () => {
         setHasClickOnCreate(true);
 
         if (!selectedCampo || isErrorDa || isErrorA || !da || !a) {
@@ -76,7 +91,30 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
             return;
         }
 
-        //TODO: dispatch
+        const prenotazione: RequestPrenotazioneDto = {
+            idCampo: selectedCampo.id,
+            da: da.toDate(),
+            a: a.toDate()
+        }
+
+        try {
+            const response = await dispatch (
+                isLezionePrivata ?
+                    prenotazioniAction.insertLezionePrivata({
+                        ...prenotazione,
+                        idMaestro: selectedMaestro!.id
+                    }) :
+                    prenotazioniAction.insertPartita(prenotazione)
+            )
+            unwrapResult(response);
+
+            props.setOpen(false);
+            setOpenSnackbarSuccess(true); //TODO Check if work
+        } catch (e) {
+            const err = e as {message: string}
+            setErrorMsg(err.message);
+            setOpenSnackbar(true);
+        }
     };
 
     return (
@@ -143,6 +181,12 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
                 <Button onClick={createPrenotazione} variant={'contained'}>{isLezionePrivata ? 'Prenota lezione privata' : 'Prenota partita'}</Button>
             </DialogActions>
         </Dialog>
+
+        <Snackbar open={openSnackbarSuccess} autoHideDuration={3000} onClose={() => setOpenSnackbarSuccess(false)} anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
+            <Alert onClose={() => setOpenSnackbarSuccess(false)} severity="error" sx={{width: '100%'}}>
+                <>Prenotazione creata con successo</>
+            </Alert>
+        </Snackbar>
 
         {errorMsg !== undefined && (
             <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)} anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
