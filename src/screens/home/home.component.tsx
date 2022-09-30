@@ -24,6 +24,7 @@ import {NewsSection} from './components/newsSection/newsSection.component';
 import {InformazioniSection} from './components/informazioniSection/informazioniSection.component';
 import {ContattiSection} from './components/contattiSection/contattiSection.component';
 import {PrenotazioniSection} from './components/prenotazioniSection/prenotazioniSection.component';
+import {AmiciSection} from './components/amiciSection/amiciSection.component';
 
 interface HomeProps{
     window?: () => Window;
@@ -74,7 +75,7 @@ export const Home = (props: HomeProps) => {
             case UserPages.TORNEI:
                 return <div>Tornei</div>;
             case UserPages.AMICI:
-                return <div>Amici</div>;
+                return <AmiciSection />;
             case UserPages.PROFILO:
                 return <div>Profilo</div>;
             case UserPages.CONTATTI:
