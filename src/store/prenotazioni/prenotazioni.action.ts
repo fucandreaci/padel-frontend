@@ -2,8 +2,8 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {prenotazioniService} from 'api/prenotazioni.service';
 import {utility} from 'utils/utility';
 import {RootState} from '../reducer.config';
-import {RequestLezionePrivataDto} from '../../models/lezioniPrivate';
-import {RequestPrenotazioneDto} from '../../models/prenotazioni';
+import {RequestLezionePrivataDto} from 'models/lezioniPrivate';
+import {RequestPrenotazioneDto} from 'models/prenotazioni';
 
 export const enum PRENOTAZIONI_ACTION {
     FETCH_PRENOTAZIONI = 'FETCH_PRENOTAZIONI',

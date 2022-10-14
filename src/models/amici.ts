@@ -8,3 +8,8 @@ export interface ResponseAmiciziaDto {
 export interface RequestAmiciziaDto {
     idUtente: number,
 }
+
+export interface RequestConfermaAmiciziaDto {
+    idAmico: number,
+    conferma: boolean
+}

@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import {tokenUtils} from 'utils/token.utils';
 import {RequestPrenotazioneDto, ResponsePrenotazioneWithTypeDto} from 'models/prenotazioni';
-import {RequestLezionePrivataDto} from '../models/lezioniPrivate';
+import {RequestLezionePrivataDto} from 'models/lezioniPrivate';
 
 const getMyPrenotazioni = (): Promise<AxiosResponse<ResponsePrenotazioneWithTypeDto[]>> => {
     return axios.get("/prenotazioni", tokenUtils.getHeader());

@@ -5,6 +5,7 @@ import {amiciAction} from './amici.action';
 const initialState: AmiciState = {
     amici: [],
     availableAmici: [],
+    richiesteInAttesa: [],
     isLoading: false,
 };
 
@@ -77,6 +78,57 @@ export const amiciReducer = {
         });
 
         builder.addCase(amiciAction.inviaRichiesta.rejected, (state, action) => {
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error.message,
+            }
+        });
+
+        builder.addCase(amiciAction.confermaRichiesta.pending, (state, action) => {
+            return {
+                ...state,
+                isLoading: true,
+                error: undefined
+            }
+        });
+
+        builder.addCase(amiciAction.confermaRichiesta.fulfilled, (state, action) => {
+            return {
+                ...state,
+                isLoading: false,
+                amici: action.payload.accettata ? [action.payload, ...state.amici] : [...state.amici],
+                richiesteInAttesa: state.richiesteInAttesa.filter(a => a.idAmico !== action.payload.idAmico),
+                error: undefined
+            }
+        });
+
+        builder.addCase(amiciAction.confermaRichiesta.rejected, (state, action) => {
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error.message,
+            }
+        });
+
+        builder.addCase(amiciAction.fetchRichiesteInSospeso.pending, (state, action) => {
+            return {
+                ...state,
+                isLoading: true,
+                error: undefined
+            }
+        });
+
+        builder.addCase(amiciAction.fetchRichiesteInSospeso.fulfilled, (state, action) => {
+            return {
+                ...state,
+                isLoading: false,
+                richiesteInAttesa: action.payload,
+                error: undefined
+            }
+        });
+
+        builder.addCase(amiciAction.fetchRichiesteInSospeso.rejected, (state, action) => {
             return {
                 ...state,
                 isLoading: false,
