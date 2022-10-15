@@ -25,3 +25,9 @@ export enum Ruolo {
     ADMIN = 'ADMIN',
     USER = 'USER'
 }
+
+export interface UtenteDto {
+    id: number;
+    nome: string;
+    cognome: string;
+}

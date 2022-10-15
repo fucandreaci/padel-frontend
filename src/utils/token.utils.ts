@@ -1,3 +1,5 @@
+import jwt_decode from 'jwt-decode';
+
 const getJWT = () => {
     const token = localStorage.getItem('token');
     return token;
@@ -14,7 +16,14 @@ const getHeader = () => {
     }
 }
 
+const getPayload = () => {
+    const token = localStorage.getItem('token')
+    const payload =  jwt_decode<{sub: number}>(token || '');
+    return payload;
+}
+
 export const tokenUtils = {
     getJWT,
-    getHeader
+    getHeader,
+    getPayload
 }
