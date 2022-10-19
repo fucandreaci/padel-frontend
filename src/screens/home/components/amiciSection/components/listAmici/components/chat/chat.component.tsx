@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {forwardRef, useEffect, useRef, useState} from 'react';
 import {
     Alert,
     Box,
@@ -37,7 +37,7 @@ const style = {
     p: 4,
 };
 
-export const Chat = (props: ChatProps) => {
+export const Chat = forwardRef((props: ChatProps, ref: React.Ref<HTMLDivElement>) => {
     const [messaggi, setMessaggi] = useState<MessaggioOrdinato[]>([]);
     const [newMessage, setNewMessage] = useState<string>('');
     const [openToastError, setOpenToastError] = useState<boolean>(false);
@@ -95,7 +95,7 @@ export const Chat = (props: ChatProps) => {
     }
 
     return (
-        <div className={`${componentClassName}`}>
+        <div className={`${componentClassName}`} ref={ref}>
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Chat con {props.nome} {props.cognome}
@@ -113,7 +113,9 @@ export const Chat = (props: ChatProps) => {
                                 side={messaggio.user.id === myId ? 'right' : undefined}
                                 avatar={messaggio.user.id !== myId ? '' : undefined}
                                 messages={messaggio.messages}
+                                idMsg={messaggio.id}
                                 classes={{}}
+                                userId={messaggio.user.id}
                             />
                         ))
                     }
@@ -121,9 +123,9 @@ export const Chat = (props: ChatProps) => {
                 </Box>
 
                 <FormControl sx={{m: 1, width: '100%'}} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Invia messaggio</InputLabel>
+                    <InputLabel htmlFor="send-message">Invia messaggio</InputLabel>
                     <OutlinedInput
-                        id="outlined-adornment-password"
+                        id="send-message"
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
                         disabled={isLoading}
@@ -152,4 +154,4 @@ export const Chat = (props: ChatProps) => {
             }
         </div>
     )
-};
+});

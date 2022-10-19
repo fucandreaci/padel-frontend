@@ -4,7 +4,7 @@ import {
     Box,
     Card,
     CardContent,
-    Chip,
+    Chip, DialogContent,
     List,
     ListItem,
     ListItemButton,
@@ -86,11 +86,13 @@ export const ListAmici = (props: ListAmiciProps) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Chat
-                    id={chatInfo ? chatInfo.id : 0}
-                    nome={chatInfo ? chatInfo.nome : ''}
-                    cognome={chatInfo ? chatInfo.cognome : ''}
-                />
+                <DialogContent>
+                    <Chat
+                        id={chatInfo ? chatInfo.id : 0}
+                        nome={chatInfo ? chatInfo.nome : ''}
+                        cognome={chatInfo ? chatInfo.cognome : ''}
+                    />
+                </DialogContent>
             </Modal>
         </div>
     )

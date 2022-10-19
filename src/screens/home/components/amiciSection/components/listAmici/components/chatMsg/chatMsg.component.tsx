@@ -2,45 +2,99 @@ import React, {useState} from 'react';
 import cx from 'clsx';
 import {CssVarsProvider} from '@mui/joy/styles';
 import {Styles, withStyles} from '@mui/styles';
-import {Avatar, Grid, Typography} from '@mui/material';
+import {Alert, Avatar, Grid, Snackbar, Typography} from '@mui/material';
 import PropTypes from 'prop-types';
 import Menu from '@mui/joy/Menu';
 import MenuItem from '@mui/joy/MenuItem';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import {Report} from '@mui/icons-material';
+import {MessageItem} from './components/messageItem/messageItem.component';
+import {segnalazioniService} from 'api/segnalazioni.service';
+import {RequestInviaSegnalazioneDto} from 'models/segnalazioni';
+import {tokenUtils} from 'utils/token.utils';
+import {AxiosError} from 'axios';
 
 interface ChatMsgProps {
     classes,
     avatar,
+    idMsg,
     messages,
     side,
     GridContainerProps,
     GridItemProps,
     AvatarProps,
     getTypographyProps,
+    userId
 }
 
 const ChatMsg = (props: ChatMsgProps) => {
     const {
         classes,
         avatar,
+        idMsg,
         messages,
         side,
         GridContainerProps,
         GridItemProps,
         AvatarProps,
         getTypographyProps,
+        userId
     } = props;
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [messaggioId, setMessaggioId] = useState<string>('');
+    const [openToastError, setOpenToastError] = useState<boolean>(false);
+    const [openToastSuccess, setOpenToastSuccess] = useState<boolean>(false);
+    const [toastError, setToastError] = useState<string>('');
+
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget.querySelector('p'));
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleCloseErr = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenToastError(false);
+    };
+
+    const handleCloseSucc = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenToastSuccess(false);
+    };
+
+    const segnalaMessaggio = () => {
+        const myId = tokenUtils.getPayload().sub
+        const idChat = myId < userId ? myId + '_' + userId : userId + '_' + myId;
+
+        const dto: RequestInviaSegnalazioneDto = {
+            idMessaggio: messaggioId,
+            idChat
+        }
+        segnalazioniService.inviaSegnalazione(dto).then(() => {
+            setOpenToastSuccess(true);
+        }).catch(e => {
+            console.log(e)
+            const {response} = e as AxiosError
+            if (response && response.data) {
+                const errData = response as { data: string }
+                setOpenToastError(true);
+                setToastError(errData.data);
+            }
+        })
+
+        handleClose();
+    }
 
     const attachClass = index => {
         if (index === 0) {
@@ -52,9 +106,11 @@ const ChatMsg = (props: ChatMsgProps) => {
         return '';
     };
 
-    const showContextMenu = (e) => {
+    const showContextMenu = (e: any, idMsg: string) => {
         if (side === 'left') {
             e.preventDefault();
+
+            setMessaggioId(idMsg);
             handleClick(e);
         }
     }
@@ -79,34 +135,36 @@ const ChatMsg = (props: ChatMsgProps) => {
                 {messages.map((msg, i) => {
                     const TypographyProps = getTypographyProps(msg, i, props);
                     return (
-                        <div key={msg.id || i} className={classes[`${side}Row`]} onContextMenu={showContextMenu}>
-                            <Typography
-                                align={'left'}
-                                {...TypographyProps}
-                                className={cx(
-                                    classes.msg,
-                                    classes[side],
-                                    attachClass(i),
-                                    TypographyProps.className
-                                )}
-                            >
-                                {msg}
-                            </Typography>
-                        </div>
+                        <MessageItem
+                            key={msg.id || i}
+                            className={cx(
+                                classes.msg,
+                                classes[side],
+                                attachClass(i),
+                                TypographyProps.className
+                            )}
+                            TypographyProps={TypographyProps}
+                            classes={classes}
+                            attachClass={attachClass}
+                            side={side}
+                            idMsg={idMsg}
+                            msg={msg}
+                            showContextMenu={showContextMenu}
+                        />
                     );
                 })}
             </Grid>
 
             <CssVarsProvider>
                 <Menu
-                    id="positioned-demo-menu"
+                    id="positioned-menu-menu"
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
-                    aria-labelledby="positioned-demo-button"
+                    aria-labelledby="positioned-menu-button"
                     placement="bottom-end"
                 >
-                    <MenuItem onClick={handleClose} variant="soft" color="danger">
+                    <MenuItem onClick={segnalaMessaggio} variant="soft" color="danger">
                         <ListItemDecorator sx={{color: 'inherit'}}>
                             <Report/>
                         </ListItemDecorator>{' '}
@@ -114,6 +172,22 @@ const ChatMsg = (props: ChatMsgProps) => {
                     </MenuItem>
                 </Menu>
             </CssVarsProvider>
+
+            {toastError && (
+                <Snackbar open={openToastError} autoHideDuration={3000} onClose={handleCloseErr}
+                          anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
+                    <Alert onClose={handleCloseErr} severity="error" sx={{width: '100%'}}>
+                        <>{toastError}</>
+                    </Alert>
+                </Snackbar>)
+            }
+
+            <Snackbar open={openToastSuccess} autoHideDuration={3000} onClose={handleCloseSucc}
+                      anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
+                <Alert onClose={handleCloseSucc} severity="success" sx={{width: '100%'}}>
+                    <>Messaggio segnalato</>
+                </Alert>
+            </Snackbar>
         </Grid>
     );
 }

@@ -1,6 +1,7 @@
 import {UtenteDto} from './utente';
 
 export interface Messaggio {
+    id: string;
     sender: UtenteDto;
     receiver: UtenteDto;
     message: string;
@@ -8,6 +9,7 @@ export interface Messaggio {
 }
 
 export interface MessaggioOrdinato {
+    id: string;
     user: UtenteDto;
     messages: string[];
     time: Date;

@@ -25,10 +25,6 @@ export const readChat = (userId: number, callback: (snapshot: QuerySnapshot<Docu
     const myId = tokenUtils.getPayload().sub
     const chatName = myId < userId ? myId + '_' + userId : userId + '_' + myId;
 
-    console.log('chatName', chatName);
-    console.log('userId', userId);
-    console.log('myId', myId);
-
     const chat = readCollection(chatName);
     return onSnapshot(chat, callback)
 }
@@ -38,12 +34,13 @@ export const mapReadChat = (userId: number, setMessaggi: (messaggi: MessaggioOrd
     readChat(userId, (snapshot) => {
         if (callback) callback();
 
-        const messaggi: Messaggio[] = snapshot.docs.map(doc => doc.data()).map(data => {
+        const messaggi: Messaggio[] = snapshot.docs.map(doc => {
             return {
-                sender: data.sender,
-                receiver: data.receiver,
-                message: data.message,
-                time: new Date(data.time)
+                sender: doc.data().sender,
+                receiver: doc.data().receiver,
+                message: doc.data().message,
+                time: new Date(doc.data().time),
+                id: doc.id
             }
         });
         const msgs = messaggi.sort((a, b) => a.time.getTime() - b.time.getTime());
@@ -56,6 +53,7 @@ const mapMsgs = (msgs: Messaggio[]): MessaggioOrdinato[] => {
     for (let i = 0; i < msgs.length; i++) {
         if (i === 0 || (i > 0 && msgs[i].sender.id !== msgs[i - 1].sender.id)) {
             msgsOrdinati[i] = {
+                id: msgs[i].id,
                 user: msgs[i].sender,
                 time: msgs[i].time,
                 messages: [msgs[i].message]
