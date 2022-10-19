@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     Alert,
     Box,
@@ -30,8 +30,10 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
+    height: '80vh',
     bgcolor: 'background.paper',
     boxShadow: 24,
+    borderRadius: 2,
     p: 4,
 };
 
@@ -42,16 +44,26 @@ export const Chat = (props: ChatProps) => {
     const [toastError, setToastError] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
     const myId = parseInt(tokenUtils.getPayload().sub + '')
 
     useEffect(() => {
         setIsLoading(true);
+        scrollToBottomMessages();
+
+        window.addEventListener('resize', scrollToBottomMessages);
 
         mapReadChat(props.id, setMessaggi, () => {
             setIsLoading(false);
             setNewMessage('');
+            scrollToBottomMessages();
         });
-    }, []);
+
+        return () => {
+            window.removeEventListener('resize', scrollToBottomMessages);
+        }
+    }, [messagesEndRef]);
 
     const onSend = () => {
         if (newMessage) {
@@ -75,21 +87,29 @@ export const Chat = (props: ChatProps) => {
 
         setOpenToastError(false);
     }
+
+    const scrollToBottomMessages = () => {
+        setTimeout(() => {
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+        }, 500);
+    }
+
     return (
         <div className={`${componentClassName}`}>
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Chat con {props.nome} {props.cognome}
                 </Typography>
-                <Typography id="modal-modal-description" sx={{mt: 2}}>
+                <Box id="modal-modal-description" sx={{mt: 2, height: '65vh', overflowY: 'auto'}}>
                     {
                         !isLoading && messaggi.length === 0 &&
                             <Alert severity="info" sx={{mb: 2}}>Nessun messaggio scambiato con {props.nome} {props.cognome}</Alert>
                     }
 
                     {
-                        messaggi.map((messaggio) => (
+                        messaggi.map((messaggio, index) => (
                             <ChatMsg
+                                key={index}
                                 side={messaggio.user.id === myId ? 'right' : undefined}
                                 avatar={messaggio.user.id !== myId ? '' : undefined}
                                 messages={messaggio.messages}
@@ -97,8 +117,8 @@ export const Chat = (props: ChatProps) => {
                             />
                         ))
                     }
-
-                </Typography>
+                    <div ref={messagesEndRef}/>
+                </Box>
 
                 <FormControl sx={{m: 1, width: '100%'}} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Invia messaggio</InputLabel>
