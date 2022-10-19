@@ -12,3 +12,8 @@ export interface MessaggioOrdinato {
     messages: string[];
     time: Date;
 }
+
+export interface InviaMessaggioDto {
+    idDestinatario: number;
+    messaggio: string;
+}

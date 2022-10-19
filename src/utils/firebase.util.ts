@@ -26,13 +26,18 @@ export const readChat = (userId: number, callback: (snapshot: QuerySnapshot<Docu
     const chatName = myId < userId ? myId + '_' + userId : userId + '_' + myId;
 
     console.log('chatName', chatName);
+    console.log('userId', userId);
+    console.log('myId', myId);
+
     const chat = readCollection(chatName);
     return onSnapshot(chat, callback)
 }
 
-export const mapReadChat = (userId: number, setMessaggi: (messaggi: MessaggioOrdinato[]) => void)  => {
+export const mapReadChat = (userId: number, setMessaggi: (messaggi: MessaggioOrdinato[]) => void, callback?: () => void)  => {
 
     readChat(userId, (snapshot) => {
+        if (callback) callback();
+
         const messaggi: Messaggio[] = snapshot.docs.map(doc => doc.data()).map(data => {
             return {
                 sender: data.sender,
@@ -59,7 +64,7 @@ const mapMsgs = (msgs: Messaggio[]): MessaggioOrdinato[] => {
         }
 
         if (msgs[i].sender.id === msgs[i - 1].sender.id) {
-            msgsOrdinati[i - 1].messages.push(msgs[i].message);
+            msgsOrdinati[msgsOrdinati.length - 1].messages.push(msgs[i].message);
         }
     }
 

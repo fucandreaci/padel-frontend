@@ -46,7 +46,7 @@ export const ListAmici = (props: ListAmiciProps) => {
                         </Typography>
                         <List disablePadding>
                             {
-                                amici.map((amico) => (
+                                amici.map((amico) =>
                                     <ListItem
                                         key={amico.idAmico}
                                         onClick={() => {
@@ -70,7 +70,7 @@ export const ListAmici = (props: ListAmiciProps) => {
                                             />
                                         </ListItemButton>
                                     </ListItem>
-                                ))
+                                )
                             }
                         </List>
                     </CardContent>
