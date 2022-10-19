@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import cx from 'clsx';
-
+import {CssVarsProvider} from '@mui/joy/styles';
 import {Styles, withStyles} from '@mui/styles';
 import {Avatar, Grid, Typography} from '@mui/material';
 import PropTypes from 'prop-types';
+import Menu from '@mui/joy/Menu';
+import MenuItem from '@mui/joy/MenuItem';
+import ListItemDecorator from '@mui/joy/ListItemDecorator';
+import {Report} from '@mui/icons-material';
 
 interface ChatMsgProps {
     classes,
@@ -28,6 +32,16 @@ const ChatMsg = (props: ChatMsgProps) => {
         getTypographyProps,
     } = props;
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget.querySelector('p'));
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const attachClass = index => {
         if (index === 0) {
             return classes[`${side}First`];
@@ -37,6 +51,14 @@ const ChatMsg = (props: ChatMsgProps) => {
         }
         return '';
     };
+
+    const showContextMenu = (e) => {
+        if (side === 'left') {
+            e.preventDefault();
+            handleClick(e);
+        }
+    }
+
     return (
         <Grid
             container
@@ -53,12 +75,11 @@ const ChatMsg = (props: ChatMsgProps) => {
                     />
                 </Grid>
             )}
-            <Grid item  xs={side==='left' ? 8 : 12}>
+            <Grid item xs={side === 'left' ? 8 : 12}>
                 {messages.map((msg, i) => {
                     const TypographyProps = getTypographyProps(msg, i, props);
                     return (
-                        // eslint-disable-next-line react/no-array-index-key
-                        <div key={msg.id || i} className={classes[`${side}Row`]}>
+                        <div key={msg.id || i} className={classes[`${side}Row`]} onContextMenu={showContextMenu}>
                             <Typography
                                 align={'left'}
                                 {...TypographyProps}
@@ -75,6 +96,24 @@ const ChatMsg = (props: ChatMsgProps) => {
                     );
                 })}
             </Grid>
+
+            <CssVarsProvider>
+                <Menu
+                    id="positioned-demo-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="positioned-demo-button"
+                    placement="bottom-end"
+                >
+                    <MenuItem onClick={handleClose} variant="soft" color="danger">
+                        <ListItemDecorator sx={{color: 'inherit'}}>
+                            <Report/>
+                        </ListItemDecorator>{' '}
+                        Segnala
+                    </MenuItem>
+                </Menu>
+            </CssVarsProvider>
         </Grid>
     );
 }
