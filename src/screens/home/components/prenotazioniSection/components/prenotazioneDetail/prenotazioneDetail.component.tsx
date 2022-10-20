@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './prenotazioneDetail.scss'
 import {PrenotazioneType, ResponsePrenotazioneWithTypeDto} from 'models/prenotazioni';
 import {Box, Card, CardContent, Chip, Typography} from '@mui/material';
@@ -57,10 +57,6 @@ export const PrenotazioneDetail = (props: PrenotazioneDetailProps) => {
             return '-' + props.prenotazione.coupon.valore + (props.prenotazione.coupon.tipo == TipoCoupon.PERCENTUALE ? '%' : '€');
         }
     }
-
-    useEffect(()=> {
-        console.log(props.prenotazione);
-    }, [])
 
     return (
         <div className={`${componentClassName}`}>
