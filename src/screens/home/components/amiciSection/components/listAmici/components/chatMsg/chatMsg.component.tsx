@@ -84,7 +84,6 @@ const ChatMsg = (props: ChatMsgProps) => {
         segnalazioniService.inviaSegnalazione(dto).then(() => {
             setOpenToastSuccess(true);
         }).catch(e => {
-            console.log(e)
             const {response} = e as AxiosError
             if (response && response.data) {
                 const errData = response as { data: string }

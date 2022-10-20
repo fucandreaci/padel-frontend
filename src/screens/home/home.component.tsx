@@ -77,8 +77,6 @@ export const Home = (props: HomeProps) => {
                 return <TorneiSection />;
             case UserPages.AMICI:
                 return <AmiciSection />;
-            case UserPages.PROFILO:
-                return <div>Profilo</div>;
             case UserPages.CONTATTI:
                 return <ContattiSection />;
             case UserPages.NEWS:

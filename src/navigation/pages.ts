@@ -4,7 +4,6 @@ export enum UserPages {
     PRENOTAZIONE = 'Prenotazione',
     TORNEI = 'Tornei',
     AMICI = 'Amici',
-    PROFILO = 'Profilo',
     CONTATTI = 'Contatti',
     NEWS = 'News',
 }
