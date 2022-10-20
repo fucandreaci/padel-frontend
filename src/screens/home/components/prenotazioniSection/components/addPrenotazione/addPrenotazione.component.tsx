@@ -9,7 +9,7 @@ import {
     DialogContent,
     DialogTitle,
     FormControlLabel, Snackbar,
-    Stack
+    Stack, TextField
 } from '@mui/material';
 import {ResponseCampoDto} from 'models/campi';
 import {DateTimePickerPrenotazione} from './components/dateTimePickerPrenotazione/dateTimePickerPrenotazione.component';
@@ -44,6 +44,7 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
     const [selectedMaestro, setSelectedMaestro] = useState<SelectItem | undefined>();
     const [da, setDa] = useState<Dayjs|null>(null);
     const [a, setA] = useState<Dayjs|null>(null);
+    const [coupon, setCoupon] = useState<string>('');
     const [isLezionePrivata, setIsLezionePrivata] = useState<boolean>(false);
     const [isErrorDa, setIsErrorDa] = useState<boolean>(false);
     const [isErrorA, setIsErrorA] = useState<boolean>(false);
@@ -94,7 +95,8 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
         const prenotazione: RequestPrenotazioneDto = {
             idCampo: selectedCampo.id,
             da: da.toDate(),
-            a: a.toDate()
+            a: a.toDate(),
+            codiceCoupon: coupon,
         }
 
         try {
@@ -136,6 +138,14 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
                         id={'campo-select'}
                         error={hasClickOnCreate && !selectedCampo}
                     />
+
+                    <TextField
+                        label="Coupon"
+                        variant="outlined"
+                        value={coupon}
+                        onChange={(e) => setCoupon(e.target.value)}
+                    />
+
 
                     <Stack direction={'row'} spacing={2}>
                         <DateTimePickerPrenotazione
@@ -183,7 +193,7 @@ export const AddPrenotazione = (props: AddPrenotazioneProps) => {
         </Dialog>
 
         <Snackbar open={openSnackbarSuccess} autoHideDuration={3000} onClose={() => setOpenSnackbarSuccess(false)} anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
-            <Alert onClose={() => setOpenSnackbarSuccess(false)} severity="error" sx={{width: '100%'}}>
+            <Alert onClose={() => setOpenSnackbarSuccess(false)} severity="success" sx={{width: '100%'}}>
                 <>Prenotazione creata con successo</>
             </Alert>
         </Snackbar>

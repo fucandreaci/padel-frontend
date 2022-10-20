@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './prenotazioneDetail.scss'
 import {PrenotazioneType, ResponsePrenotazioneWithTypeDto} from 'models/prenotazioni';
-import {Box, Button, Card, CardActions, CardContent, Chip, Typography} from '@mui/material';
-import {SportsTennis} from '@mui/icons-material';
+import {Box, Card, CardContent, Chip, Typography} from '@mui/material';
+import {Discount, SportsTennis} from '@mui/icons-material';
 import {utility} from 'utils/utility';
+import {TipoCoupon} from 'models/coupon';
 
 interface PrenotazioneDetailProps {
     prenotazione: ResponsePrenotazioneWithTypeDto
@@ -51,6 +52,16 @@ export const PrenotazioneDetail = (props: PrenotazioneDetailProps) => {
         return intestazione;
     }
 
+    const getCouponValue = () => {
+        if (props.prenotazione.coupon) {
+            return '-' + props.prenotazione.coupon.valore + (props.prenotazione.coupon.tipo == TipoCoupon.PERCENTUALE ? '%' : '€');
+        }
+    }
+
+    useEffect(()=> {
+        console.log(props.prenotazione);
+    }, [])
+
     return (
         <div className={`${componentClassName}`}>
             <Box sx={{minWidth: 275}}>
@@ -66,7 +77,13 @@ export const PrenotazioneDetail = (props: PrenotazioneDetailProps) => {
                             Dalle {formatTime(new Date(props.prenotazione.da))} alle {formatTime(new Date(props.prenotazione.a))}
                         </Typography>
 
-                        <Chip label={props.prenotazione.campo.nome} color="primary" variant="outlined" />
+                        <Chip label={props.prenotazione.campo.nome} color="primary" variant="outlined" sx={{mr: 2}}/>
+
+                        {
+                            props.prenotazione.coupon && (
+                                <Chip avatar={<Discount />} label={getCouponValue()} />
+                            )
+                        }
 
                         {
                             props.prenotazione.type === PrenotazioneType.LEZIONE_PRIVATA && (
