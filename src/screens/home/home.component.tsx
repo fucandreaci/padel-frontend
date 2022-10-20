@@ -25,6 +25,7 @@ import {InformazioniSection} from './components/informazioniSection/informazioni
 import {ContattiSection} from './components/contattiSection/contattiSection.component';
 import {PrenotazioniSection} from './components/prenotazioniSection/prenotazioniSection.component';
 import {AmiciSection} from './components/amiciSection/amiciSection.component';
+import {TorneiSection} from './components/torneiSection/torneiSection.component';
 
 interface HomeProps{
     window?: () => Window;
@@ -73,7 +74,7 @@ export const Home = (props: HomeProps) => {
             case UserPages.PRENOTAZIONE:
                 return <PrenotazioniSection />;
             case UserPages.TORNEI:
-                return <div>Tornei</div>;
+                return <TorneiSection />;
             case UserPages.AMICI:
                 return <AmiciSection />;
             case UserPages.PROFILO:
