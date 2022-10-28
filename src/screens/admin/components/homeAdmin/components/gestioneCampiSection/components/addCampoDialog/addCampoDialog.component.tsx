@@ -58,6 +58,8 @@ export const AddCampoDialog = (props: AddCampoDialogProps) => {
 
                 setOpenToastSuccess(true);
                 props.setOpen(false);
+                setNome('');
+                setUrlImmagine('');
             } catch (e) {
                 console.error(e);
             }

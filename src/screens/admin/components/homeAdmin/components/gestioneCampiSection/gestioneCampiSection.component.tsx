@@ -91,7 +91,7 @@ export const GestioneCampiSection = (props: GestioneCampiSectionProps) => {
                 campi.length == 0 && !isLoading ? (
                     <Alert severity="info">
                         <AlertTitle>Info</AlertTitle>
-                        Nessun campo trovato! <strong>Aggiungine uno!</strong>
+                        Nessun campo trovato! <strong style={{cursor: 'pointer'}} onClick={() => setIsCreationPanelOpen(true)}><u>Aggiungine uno!</u></strong>
                     </Alert>
                 ) : (
                     campi.map((campo, index) => {
@@ -102,6 +102,7 @@ export const GestioneCampiSection = (props: GestioneCampiSectionProps) => {
                                 sottoTitolo={campo.nome}
                                 icon={'🏟'}
                                 titolo={'Campo'}
+                                imageUrl={campo.urlImmagine}
                                 actions={getCardActions(campo)}/>
                         )
                     })
