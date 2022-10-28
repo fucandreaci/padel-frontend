@@ -14,8 +14,13 @@ const checkUser = (): Promise<AxiosResponse<boolean>> => {
     return axios.post("/auth/isValidUser", {}, tokenUtils.getHeader());
 }
 
+const checkAdmin = (): Promise<AxiosResponse<boolean>> => {
+    return axios.post("/auth/isValidAdmin", {}, tokenUtils.getHeader());
+}
+
 export const authService = {
     login,
     signup,
-    checkUser
+    checkUser,
+    checkAdmin
 }

@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import './home.scss'
+import './homeAdmin.scss'
+import customHistory from 'navigation/customHistory.config';
+import {useCheckAdmin} from './checkAdmin.hook';
 import {
     AppBar,
     Box,
@@ -14,48 +16,39 @@ import {
     Toolbar,
     Typography
 } from '@mui/material';
+import {AdminPages} from 'navigation/pages';
 import {Menu} from '@mui/icons-material';
-import {UserPages} from 'navigation/pages';
 import {utility} from 'utils/utility';
-import {HomeSection} from './components/homeSection/homeSection.component';
-import {useCheckUser} from './checkUser.hook';
-import customHistory from 'navigation/customHistory.config';
-import {NewsSection} from './components/newsSection/newsSection.component';
-import {InformazioniSection} from './components/informazioniSection/informazioniSection.component';
-import {ContattiSection} from './components/contattiSection/contattiSection.component';
-import {PrenotazioniSection} from './components/prenotazioniSection/prenotazioniSection.component';
-import {AmiciSection} from './components/amiciSection/amiciSection.component';
-import {TorneiSection} from './components/torneiSection/torneiSection.component';
+import {HomeAdminSection} from './components/homeAdminSection/homeAdminSection.component';
+import {GestioneCampiSection} from './components/gestioneCampiSection/gestioneCampiSection.component';
 
-interface HomeProps{
+interface HomeAdminProps{
     window?: () => Window;
 }
 
-const componentClassName = 'home';
+const componentClassName = 'home-admin';
 
-export const Home = (props: HomeProps) => {
+export const HomeAdmin = (props: HomeAdminProps) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [selectedPage, setSelectedPage] = useState<UserPages>(UserPages.HOME);
+    const [selectedPage, setSelectedPage] = useState<AdminPages>(AdminPages.HOME);
 
-    const [_, error] = useCheckUser();
-
+    const [_, error] = useCheckAdmin();
     useEffect(() => {
         if (error !== undefined) {
             customHistory.push('/login');
         }
     }, [error]);
 
-
     const constDrawer = (
         <Box onClick={() => setMobileOpen(!mobileOpen)} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ my: 2 }}>
-                Padel
+                Admin Padel
             </Typography>
             <Divider />
             <List>
-                {Object.entries(UserPages).map(([_, item]) => (
-                    <ListItem key={item} disablePadding onClick={() => setSelectedPage(UserPages[item.toUpperCase()])}>
+                {Object.entries(AdminPages).map(([_, item]) => (
+                    <ListItem key={item} disablePadding onClick={() => setSelectedPage(AdminPages[item.toUpperCase().replace(' ', '_')])}>
                         <ListItemButton sx={{ textAlign: 'center' }} selected={item === selectedPage}>
                             <ListItemText primary={item}/>
                         </ListItemButton>
@@ -67,22 +60,12 @@ export const Home = (props: HomeProps) => {
 
     const renderPage = () => {
         switch (selectedPage) {
-            case UserPages.HOME:
-                return <HomeSection setSelectedPage={setSelectedPage}/>;
-            case UserPages.INFORMAZIONI:
-                return <InformazioniSection />;
-            case UserPages.PRENOTAZIONE:
-                return <PrenotazioniSection />;
-            case UserPages.TORNEI:
-                return <TorneiSection />;
-            case UserPages.AMICI:
-                return <AmiciSection />;
-            case UserPages.CONTATTI:
-                return <ContattiSection />;
-            case UserPages.NEWS:
-                return <NewsSection/>;
+            case AdminPages.HOME:
+                return <HomeAdminSection />;
+            case AdminPages.GESTIONE_CAMPI:
+                return <GestioneCampiSection />;
             default:
-                return <HomeSection setSelectedPage={setSelectedPage}/>;
+                return <HomeAdminSection />;
         }
     }
 
@@ -109,8 +92,8 @@ export const Home = (props: HomeProps) => {
                         Padel
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        {Object.entries(UserPages).map(([_, item]) => (
-                            <Button variant={item === selectedPage ? 'contained' : 'text'} color={item === selectedPage ? 'info' : 'primary'} key={item} sx={{ color: '#fff' }} style={{textTransform: 'none'}} onClick={() => setSelectedPage(UserPages[item.toUpperCase()])} disableElevation>
+                        {Object.entries(AdminPages).map(([_, item]) => (
+                            <Button variant={item === selectedPage ? 'contained' : 'text'} color={item === selectedPage ? 'info' : 'primary'} key={item} sx={{ color: '#fff' }} style={{textTransform: 'none'}} onClick={() => setSelectedPage(AdminPages[item.toUpperCase().replace(' ', '_')])} disableElevation>
                                 {utility.capitalize(item)}
                             </Button>
                         ))}
@@ -136,7 +119,7 @@ export const Home = (props: HomeProps) => {
             </Box>
             <Box component="main" sx={{ p: 3 }} width={'100%'}>
                 <Toolbar />
-                    {renderPage()}
+                {renderPage()}
             </Box>
         </Box>
     </div>

@@ -7,3 +7,10 @@ export enum UserPages {
     CONTATTI = 'Contatti',
     NEWS = 'News',
 }
+
+export enum AdminPages {
+    HOME = 'Home',
+    GESTIONE_CAMPI = 'Gestione Campi',
+    GESTIONE_TORNEI = 'Gestione Tornei',
+    GESTIONE_UTENTI = 'Gestione Utenti',
+}

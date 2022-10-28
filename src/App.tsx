@@ -4,6 +4,7 @@ import customHistory from './navigation/customHistory.config';
 import {Login} from './screens/login/login.component';
 import {Signup} from './screens/signup/signup.component';
 import {Home} from './screens/home/home.component';
+import {HomeAdmin} from './screens/admin/components/homeAdmin/homeAdmin.component';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           </Route>
           <Route path="/home" exact={true}>
               <Home />
+          </Route>
+          <Route path="/admin/home" exact={true}>
+              <HomeAdmin />
           </Route>
         </Switch>
       </Router>

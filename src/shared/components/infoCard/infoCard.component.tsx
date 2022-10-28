@@ -1,12 +1,13 @@
 import React, {ReactNode} from 'react';
 import './infoCard.scss'
-import {Box, Card, CardContent, Typography} from '@mui/material';
+import {Box, Card, CardActions, CardContent, Typography} from '@mui/material';
 
 interface InfoCardProps {
     descrizione: string | ReactNode,
     titolo?: string,
     sottoTitolo?: string,
-    icon?: ReactNode
+    icon?: ReactNode,
+    actions?: ReactNode
 }
 
 const componentClassName = 'info-card';
@@ -38,6 +39,14 @@ export const InfoCard = (props: InfoCardProps) => {
                             {props.descrizione}
                         </Typography>
                     </CardContent>
+
+                    {
+                        props.actions && (
+                            <CardActions disableSpacing>
+                                {props.actions}
+                            </CardActions>
+                        )
+                    }
                 </Card>
             </Box>
         </div>

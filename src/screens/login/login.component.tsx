@@ -7,12 +7,14 @@ import {
     Button,
     Container,
     CssBaseline,
-    Grid, Link, Snackbar,
+    Grid,
+    Link,
+    Snackbar,
     TextField,
     Typography
 } from '@mui/material';
 import {LockOutlined} from '@mui/icons-material';
-import {RequestLoginDto} from 'models/utente';
+import {RequestLoginDto, ResponseLoginDto, Ruolo} from 'models/utente';
 import {useLogin} from './login.hook';
 import customHistory from 'navigation/customHistory.config';
 
@@ -36,7 +38,13 @@ export const Login = (props: LoginProps) => {
     useEffect(() => {
         if (data) {
             setOpenToast(false);
-            customHistory.push('/home');
+            const ruolo = (data as ResponseLoginDto).ruolo;
+
+            if (ruolo === Ruolo.USER) {
+                customHistory.push('/home');
+            } else if (ruolo === Ruolo.ADMIN) {
+                customHistory.push('/admin/home');
+            }
         }
     }, [data]);
 
