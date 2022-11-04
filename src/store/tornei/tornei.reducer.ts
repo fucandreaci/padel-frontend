@@ -156,6 +156,31 @@ export const torneiReducer = {
             }
         });
 
+        builder.addCase(torneiAction.createTorneo.pending, (state, action) => {
+            return {
+                ...state,
+                isLoading: true,
+                error: undefined
+            }
+        });
+
+        builder.addCase(torneiAction.createTorneo.fulfilled, (state, action) => {
+            return {
+                ...state,
+                tornei: [...state.tornei, action.payload],
+                isLoading: false,
+                error: undefined
+            }
+        });
+
+        builder.addCase(torneiAction.createTorneo.rejected, (state, action) => {
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error.message
+            }
+        });
+
         builder.addCase(torneiAction.resetError, (state, action) => {
             return {
                 ...state,

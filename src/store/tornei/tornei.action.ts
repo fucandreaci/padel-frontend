@@ -2,12 +2,13 @@ import {createAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {utility} from 'utils/utility';
 import {RootState} from '../reducer.config';
 import {torneiService} from 'api/tornei.service';
-import {RequestIscrizioneTorneoDto, RequestModificaTorneoDto} from 'models/tornei';
+import {RequestCreaTorneoDto, RequestIscrizioneTorneoDto, RequestModificaTorneoDto} from 'models/tornei';
 
 export const enum TORNEI_ACTION {
     GET_TORNEI = 'GET_TORNEI',
     ISCRIVI_UTENTE = 'ISCRIVI_UTENTE',
     RIMUOVI_ISCRIZIONE = 'RIMUOVI_ISCRIZIONE',
+    CREATE_TORNEO = 'CREATE_TORNEO',
     MODIFICA_TORNEO = 'MODIFICA_TORNEO',
     ELIMINA_TORNEO = 'ELIMINA_TORNEO',
     RESET_ERROR = 'RESET_ERROR',
@@ -82,12 +83,24 @@ const eliminaTorneo = createAsyncThunk(TORNEI_ACTION.ELIMINA_TORNEO, async (id: 
     }
 );
 
+const createTorneo = createAsyncThunk(TORNEI_ACTION.CREATE_TORNEO, async (dto: RequestCreaTorneoDto) => {
+        try {
+            const response = await torneiService.createTorneo(dto)
+            return response.data
+        } catch (e) {
+            const msg = utility.getErrorMessage(e);
+            throw new Error(msg);
+        }
+    }
+);
+
 const resetError = createAction(TORNEI_ACTION.RESET_ERROR);
 
 export const torneiAction = {
     fetchTornei,
     iscriviUtente,
     rimuoviUtente,
+    createTorneo,
     modificaTorneo,
     eliminaTorneo,
     resetError,

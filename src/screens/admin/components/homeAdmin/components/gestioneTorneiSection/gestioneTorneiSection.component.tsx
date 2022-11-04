@@ -6,7 +6,7 @@ import {
     Chip, Dialog, DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
+    DialogTitle, Fab,
     Typography
 } from '@mui/material';
 import {useAppDispatch} from 'store/store.config';
@@ -15,15 +15,23 @@ import {useSelector} from 'react-redux';
 import {torneiAction} from 'store/tornei/tornei.action';
 import './gestioneTorneiSection.scss'
 import {InfoCard} from 'shared/components/infoCard/infoCard.component';
-import {RequestModificaTorneoDto, ResponseTorneoDto} from 'models/tornei';
+import {RequestCreaTorneoDto, RequestModificaTorneoDto, ResponseTorneoDto} from 'models/tornei';
 import {EditTorneoPanel} from './components/editTorneoPanel/editTorneoPanel.component';
 import {unwrapResult} from '@reduxjs/toolkit';
 import {DeleteTorneoPanel} from './components/deleteTorneoPanel/deleteTorneoPanel.component';
+import {Add} from '@mui/icons-material';
+import {CreateTorneoPanel} from './components/createTorneoPanel/createTorneoPanel.component';
 
 interface GestioneTorneiSectionProps {
 }
 
 const componentClassName = 'gestione-tornei-section';
+
+const fabStyle = {
+    position: 'fixed',
+    bottom: 16,
+    right: 16,
+};
 
 export const GestioneTorneiSection = (props: GestioneTorneiSectionProps) => {
     const dispatch = useAppDispatch();
@@ -32,12 +40,16 @@ export const GestioneTorneiSection = (props: GestioneTorneiSectionProps) => {
     const [isPanelDeleteOpen, setIsPanelDeleteOpen] = useState<boolean>(false);
     const [lastTorneoSelected, setLastTorneoSelected] = useState<ResponseTorneoDto>();
     const [isButtonDisable, setIsButtonDisable] = useState<boolean>(false);
+    const [creationPanelOpen, setCreationPanelOpen] = useState<boolean>(false);
 
     // Edit torneo
     const [showSuccessEdit, setShowSuccessEdit] = useState<boolean>(false);
 
     // Delete torneo
     const [showSuccessDelete, setShowSuccessDelete] = useState<boolean>(false);
+
+    // Create torneo
+    const [showSuccessCreation, setShowSuccessCreation] = useState<boolean>(false);
 
     const tornei = useSelector(torneiSelector.getTornei);
     const isLoading = useSelector(torneiSelector.isLoading);
@@ -83,6 +95,22 @@ export const GestioneTorneiSection = (props: GestioneTorneiSectionProps) => {
         setClose(false);
     }
 
+    const onCreate = async (dto: RequestCreaTorneoDto) => {
+        try {
+            const response = await dispatch(torneiAction.createTorneo(dto));
+            unwrapResult(response);
+            setShowSuccessCreation(true);
+            setIsButtonDisable(true);
+
+            setTimeout(() => {
+                setIsButtonDisable(false);
+                setCreationPanelOpen(false);
+            }, 3000);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     const onDelete = async () => {
         if (lastTorneoSelected) {
             try {
@@ -96,7 +124,7 @@ export const GestioneTorneiSection = (props: GestioneTorneiSectionProps) => {
                     setIsPanelDeleteOpen(false);
                 }, 3000);
             } catch (e) {
-                console.log(e);
+                console.error(e);
             }
         }
     }
@@ -180,6 +208,25 @@ export const GestioneTorneiSection = (props: GestioneTorneiSectionProps) => {
                     error={errorAction}
                 />
             </Dialog>
+
+            <Dialog
+                open={creationPanelOpen}
+                onClose={() => setIsPanelDeleteOpen(false)}
+                aria-labelledby="create-dialog-title"
+                aria-describedby="create-dialog-description"
+            >
+                <CreateTorneoPanel
+                    onClose={() => setCreationPanelOpen(false)}
+                    onCreate={onCreate}
+                    showSuccess={showSuccessCreation}
+                    isButtonDisable={isButtonDisable}
+                    handleCloseToastr={() => handleCloseToastr(setShowSuccessCreation)}
+                    error={errorAction}/>
+            </Dialog>
+
+            <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => setCreationPanelOpen(true)}>
+                <Add />
+            </Fab>
         </div>
     )
 };
