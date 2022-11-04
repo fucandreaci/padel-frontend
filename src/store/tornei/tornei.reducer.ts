@@ -96,6 +96,73 @@ export const torneiReducer = {
             }
         });
 
+        builder.addCase(torneiAction.modificaTorneo.pending, (state, action) => {
+            return {
+                ...state,
+                isLoading: true,
+                error: undefined
+            }
+        });
+
+        builder.addCase(torneiAction.modificaTorneo.fulfilled, (state, action) => {
+            const tornei: ResponseTorneoDto[] = state.tornei.map(t => {
+                if (t.id === action.payload.id) {
+                    return {
+                        ...t,
+                        ...action.payload
+                    }
+                }
+                return t;
+            });
+            return {
+                ...state,
+                tornei,
+                isLoading: false,
+                error: undefined
+            }
+        });
+
+        builder.addCase(torneiAction.modificaTorneo.rejected, (state, action) => {
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error.message
+            }
+        });
+
+        builder.addCase(torneiAction.eliminaTorneo.pending, (state, action) => {
+            return {
+                ...state,
+                isLoading: true,
+                error: undefined
+            }
+        });
+
+        builder.addCase(torneiAction.eliminaTorneo.fulfilled, (state, action) => {
+            const tornei: ResponseTorneoDto[] = state.tornei.filter(t => t.id !== action.payload);
+            return {
+                ...state,
+                tornei,
+                isLoading: false,
+                error: undefined
+            }
+        });
+
+        builder.addCase(torneiAction.eliminaTorneo.rejected, (state, action) => {
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error.message
+            }
+        });
+
+        builder.addCase(torneiAction.resetError, (state, action) => {
+            return {
+                ...state,
+                error: undefined
+            }
+        });
+
         builder.addDefaultCase((state, action) => {
             return state;
         });

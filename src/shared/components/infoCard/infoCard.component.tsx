@@ -47,7 +47,7 @@ export const InfoCard = (props: InfoCardProps) => {
                             )
                         }
 
-                        <Typography variant="body2">
+                        <Typography variant="body2" component={"div"}>
                             {props.descrizione}
                         </Typography>
                     </CardContent>

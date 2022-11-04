@@ -1,13 +1,16 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import {createAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {utility} from 'utils/utility';
 import {RootState} from '../reducer.config';
 import {torneiService} from 'api/tornei.service';
-import {RequestIscrizioneTorneoDto} from 'models/tornei';
+import {RequestIscrizioneTorneoDto, RequestModificaTorneoDto} from 'models/tornei';
 
 export const enum TORNEI_ACTION {
     GET_TORNEI = 'GET_TORNEI',
     ISCRIVI_UTENTE = 'ISCRIVI_UTENTE',
-    RIMUOVI_ISCRIZIONE = 'RIMUOVI_ISCRIZIONE'
+    RIMUOVI_ISCRIZIONE = 'RIMUOVI_ISCRIZIONE',
+    MODIFICA_TORNEO = 'MODIFICA_TORNEO',
+    ELIMINA_TORNEO = 'ELIMINA_TORNEO',
+    RESET_ERROR = 'RESET_ERROR',
 }
 
 const fetchTornei = createAsyncThunk(TORNEI_ACTION.GET_TORNEI, async () => {
@@ -53,8 +56,39 @@ const rimuoviUtente = createAsyncThunk(TORNEI_ACTION.RIMUOVI_ISCRIZIONE, async (
     }
 );
 
+const modificaTorneo = createAsyncThunk(TORNEI_ACTION.MODIFICA_TORNEO,
+    async ({dto, id}: {
+        dto: RequestModificaTorneoDto,
+        id: number
+    }) => {
+        try {
+            const response = await torneiService.modificaTorneo(dto, id)
+            return response.data
+        } catch (e) {
+            const msg = utility.getErrorMessage(e);
+            throw new Error(msg);
+        }
+    }
+);
+
+const eliminaTorneo = createAsyncThunk(TORNEI_ACTION.ELIMINA_TORNEO, async (id: number) => {
+        try {
+            await torneiService.deleteTorneo(id)
+            return id
+        } catch (e) {
+            const msg = utility.getErrorMessage(e);
+            throw new Error(msg);
+        }
+    }
+);
+
+const resetError = createAction(TORNEI_ACTION.RESET_ERROR);
+
 export const torneiAction = {
     fetchTornei,
     iscriviUtente,
-    rimuoviUtente
+    rimuoviUtente,
+    modificaTorneo,
+    eliminaTorneo,
+    resetError,
 }

@@ -10,3 +10,12 @@ export interface ResponseTorneoDto {
 export interface RequestIscrizioneTorneoDto {
     idTorneo: number;
 }
+
+export interface RequestCreaTorneoDto {
+    maxPartecipanti: number,
+    descrizione: string
+}
+
+export interface RequestModificaTorneoDto extends RequestCreaTorneoDto{
+    prenotazioneAperta: boolean
+}
