@@ -28,10 +28,6 @@ export const PrenotazioniSection = (props: PrenotazioniSectionProps) => {
         dispatch(prenotazioniAction.fetchMyPrenotazioni());
     }, []);
 
-    useEffect(() => {
-        console.log(prenotazioni)
-    }, [prenotazioni]);
-
     const fabStyle = {
         position: 'fixed',
         bottom: 16,

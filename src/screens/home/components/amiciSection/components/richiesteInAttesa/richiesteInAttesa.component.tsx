@@ -31,7 +31,7 @@ export const RichiesteInAttesa = (props: RichiesteInAttesaProps) => {
 
     useEffect(() => {
         dispatch(amiciAction.fetchRichiesteInSospeso());
-    });
+    }, []);
 
     const accettaAmicizia = (idAmico: number, conferma: boolean) => {
         const dto: RequestConfermaAmiciziaDto = {

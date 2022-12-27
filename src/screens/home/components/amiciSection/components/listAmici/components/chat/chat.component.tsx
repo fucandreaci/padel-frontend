@@ -16,6 +16,7 @@ import {MessaggioOrdinato} from 'models/messaggi';
 import {tokenUtils} from 'utils/token.utils';
 import {Send} from '@mui/icons-material';
 import {messaggiService} from 'api/messaggi.service';
+import {utility} from '../../../../../../../../utils/utility';
 
 export interface ChatProps {
     id: number,
@@ -65,10 +66,6 @@ export const Chat = forwardRef((props: ChatProps, ref: React.Ref<HTMLDivElement>
         }
     }, [messagesEndRef]);
 
-    useEffect(() => {
-        console.log(messaggi)
-    }, [messaggi]);
-
 
     const onSend = () => {
         if (newMessage) {
@@ -77,9 +74,10 @@ export const Chat = forwardRef((props: ChatProps, ref: React.Ref<HTMLDivElement>
                 .then(() => {
                 })
                 .catch((err) => {
+                    console.log(err)
                     setNewMessage('');
                     setOpenToastError(true);
-                    setToastError('Si è verificato un errore: ' + err.message);
+                    setToastError('Si è verificato un errore: ' + err.response.data);
                     setIsLoading(false);
                 });
         }
