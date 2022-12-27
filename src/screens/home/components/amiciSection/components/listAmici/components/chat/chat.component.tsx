@@ -65,6 +65,11 @@ export const Chat = forwardRef((props: ChatProps, ref: React.Ref<HTMLDivElement>
         }
     }, [messagesEndRef]);
 
+    useEffect(() => {
+        console.log(messaggi)
+    }, [messaggi]);
+
+
     const onSend = () => {
         if (newMessage) {
             setIsLoading(true);
@@ -113,7 +118,6 @@ export const Chat = forwardRef((props: ChatProps, ref: React.Ref<HTMLDivElement>
                                 side={messaggio.user.id === myId ? 'right' : undefined}
                                 avatar={messaggio.user.id !== myId ? '' : undefined}
                                 messages={messaggio.messages}
-                                idMsg={messaggio.id}
                                 classes={{}}
                                 userId={messaggio.user.id}
                             />

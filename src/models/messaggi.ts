@@ -9,9 +9,8 @@ export interface Messaggio {
 }
 
 export interface MessaggioOrdinato {
-    id: string;
     user: UtenteDto;
-    messages: string[];
+    messages: { msg: string, id: string }[];
     time: Date;
 }
 

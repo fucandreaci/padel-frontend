@@ -8,6 +8,7 @@ import {campiReducer} from './campi/campi.reducer';
 import {maestriReducer} from './maestri/maestri.reducer';
 import {amiciReducer} from './amici/amici.reducer';
 import {torneiReducer} from './tornei/tornei.reducer';
+import {segnalazioniReducer} from './segnalazioni/segnalazioni.reducer';
 
 const appReducer = combineReducers({
     ...newsReducer,
@@ -17,7 +18,8 @@ const appReducer = combineReducers({
     ...campiReducer,
     ...maestriReducer,
     ...amiciReducer,
-    ...torneiReducer
+    ...torneiReducer,
+    ...segnalazioniReducer
 });
 
 export const RESET_STORE = 'RESET_STORE';

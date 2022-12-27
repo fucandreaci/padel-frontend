@@ -53,16 +53,15 @@ const mapMsgs = (msgs: Messaggio[]): MessaggioOrdinato[] => {
     for (let i = 0; i < msgs.length; i++) {
         if (i === 0 || (i > 0 && msgs[i].sender.id !== msgs[i - 1].sender.id)) {
             msgsOrdinati[i] = {
-                id: msgs[i].id,
                 user: msgs[i].sender,
                 time: msgs[i].time,
-                messages: [msgs[i].message]
+                messages: [{msg: msgs[i].message, id: msgs[i].id}]
             }
             continue;
         }
 
         if (msgs[i].sender.id === msgs[i - 1].sender.id) {
-            msgsOrdinati[msgsOrdinati.length - 1].messages.push(msgs[i].message);
+            msgsOrdinati[msgsOrdinati.length - 1].messages.push({msg: msgs[i].message, id: msgs[i].id});
         }
     }
 

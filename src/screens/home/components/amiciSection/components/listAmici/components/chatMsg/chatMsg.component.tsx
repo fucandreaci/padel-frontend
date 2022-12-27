@@ -17,7 +17,6 @@ import {AxiosError} from 'axios';
 interface ChatMsgProps {
     classes,
     avatar,
-    idMsg,
     messages,
     side,
     GridContainerProps,
@@ -31,7 +30,6 @@ const ChatMsg = (props: ChatMsgProps) => {
     const {
         classes,
         avatar,
-        idMsg,
         messages,
         side,
         GridContainerProps,
@@ -146,8 +144,8 @@ const ChatMsg = (props: ChatMsgProps) => {
                             classes={classes}
                             attachClass={attachClass}
                             side={side}
-                            idMsg={idMsg}
-                            msg={msg}
+                            idMsg={msg.id}
+                            msg={msg.msg}
                             showContextMenu={showContextMenu}
                         />
                     );
@@ -193,7 +191,7 @@ const ChatMsg = (props: ChatMsgProps) => {
 
 ChatMsg.propTypes = {
     avatar: PropTypes.string,
-    messages: PropTypes.arrayOf(PropTypes.string),
+    messages: PropTypes.arrayOf(Object),
     side: PropTypes.oneOf(['left', 'right']),
     GridContainerProps: PropTypes.shape({}),
     GridItemProps: PropTypes.shape({}),

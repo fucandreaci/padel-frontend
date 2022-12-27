@@ -1,0 +1,18 @@
+.gestione-segnalazioni{
+  &__headChat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  &__footerChat {
+    justify-content: space-between;
+    gap: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100vh;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-bottom: 20px
+  }
+}
