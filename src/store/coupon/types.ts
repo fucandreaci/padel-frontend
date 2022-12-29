@@ -1,7 +1,7 @@
-import {Coupon} from 'models/coupon';
+import {ResponseCouponDto} from 'models/coupon';
 
 export interface CouponState {
-    coupons: Coupon[];
+    coupons: ResponseCouponDto[];
     isLoading: boolean;
     error?: string;
 }

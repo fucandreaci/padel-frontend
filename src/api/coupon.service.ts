@@ -1,12 +1,12 @@
 import axios, {AxiosResponse} from 'axios';
 import {tokenUtils} from 'utils/token.utils';
-import {Coupon, RequestGenerateCouponDto} from 'models/coupon';
+import {Coupon, RequestGenerateCouponDto, ResponseCouponDto} from 'models/coupon';
 
-const getAll = (): Promise<AxiosResponse<Coupon[]>> => {
+const getAll = (): Promise<AxiosResponse<ResponseCouponDto[]>> => {
     return axios.get("/coupon", tokenUtils.getHeader());
 }
 
-const create = (dto: RequestGenerateCouponDto): Promise<AxiosResponse<Coupon>> => {
+const create = (dto: RequestGenerateCouponDto): Promise<AxiosResponse<ResponseCouponDto>> => {
     return axios.post("/coupon", dto, tokenUtils.getHeader());
 }
 

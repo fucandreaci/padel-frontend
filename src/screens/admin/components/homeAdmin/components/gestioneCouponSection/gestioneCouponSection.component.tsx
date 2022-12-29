@@ -25,7 +25,7 @@ import {useAppDispatch} from 'store/store.config';
 import {useSelector} from 'react-redux';
 import {couponSelector} from 'store/coupon/coupon.selector';
 import {Add, Delete, Discount} from '@mui/icons-material';
-import {Coupon, TipoCoupon} from 'models/coupon';
+import {ResponseCouponDto, TipoCoupon} from 'models/coupon';
 import {unwrapResult} from '@reduxjs/toolkit';
 import {AddCouponDialog} from './components/addCouponDialog/addCouponDialog.component';
 
@@ -43,7 +43,7 @@ export const GestioneCouponSection = (props: GestioneCouponSectionProps) => {
     const dispatch = useAppDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [inDeleteCoupon, setInDeleteCoupon] = useState<Coupon>();
+    const [inDeleteCoupon, setInDeleteCoupon] = useState<ResponseCouponDto>();
     const [openToastSuccess, setOpenToastSuccess] = useState(false);
     const [isCreationPanelOpen, setIsCreationPanelOpen] = useState(false);
 
@@ -107,7 +107,7 @@ export const GestioneCouponSection = (props: GestioneCouponSectionProps) => {
                                                 secondary={'-' + coupon.valore + (coupon.tipo === TipoCoupon.PERCENTUALE ? ' %' : ' €')}
                                             />
                                             <ListItemIcon>
-                                                <IconButton color={'error'} edge="end" aria-label="delete" onClick={() => {
+                                                <IconButton disabled={coupon.utilizzato} color={'error'} edge="end" aria-label="delete" onClick={() => {
                                                     setInDeleteCoupon(coupon);
                                                     setIsModalOpen(true);
                                                 }
