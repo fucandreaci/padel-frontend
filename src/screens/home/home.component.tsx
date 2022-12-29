@@ -61,6 +61,15 @@ export const Home = (props: HomeProps) => {
                         </ListItemButton>
                     </ListItem>
                 ))}
+                <ListItem disablePadding
+                          onClick={() => {
+                              localStorage.removeItem('token');
+                              customHistory.push('/login');
+                          }}>
+                    <ListItemButton sx={{textAlign: 'center'}}>
+                        <ListItemText primary={'Logout'}/>
+                    </ListItemButton>
+                </ListItem>
             </List>
         </Box>
     );
@@ -114,6 +123,16 @@ export const Home = (props: HomeProps) => {
                                 {utility.capitalize(item)}
                             </Button>
                         ))}
+                        <Button variant={'contained'}
+                                color={'error'}
+                                sx={{color: '#fff'}} style={{textTransform: 'none'}}
+                                onClick={() => {
+                                    localStorage.removeItem('token');
+                                    customHistory.push('/login');
+                                }}
+                                disableElevation>
+                            Logout
+                        </Button>
                     </Box>
                 </Toolbar>
             </AppBar>
