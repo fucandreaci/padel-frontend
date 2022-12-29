@@ -9,3 +9,8 @@ export enum TipoCoupon {
     PERCENTUALE= 'PERCENTUALE',
     EURO = 'EURO'
 }
+
+export interface RequestGenerateCouponDto {
+    tipo: TipoCoupon,
+    valore: number,
+}

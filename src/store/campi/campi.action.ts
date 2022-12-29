@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {utility} from 'utils/utility';
 import {campiService} from 'api/campi.service';
 import {RootState} from '../reducer.config';
-import {RequestCampoDto} from '../../models/campi';
+import {RequestCampoDto} from 'models/campi';
 
 export const enum CAMPI_ACTION {
     FETCH_CAMPI = 'FETCH_CAMPI',

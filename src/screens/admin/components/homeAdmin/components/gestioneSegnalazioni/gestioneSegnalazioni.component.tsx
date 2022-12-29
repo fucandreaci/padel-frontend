@@ -2,28 +2,29 @@ import React, {useEffect, useState} from 'react';
 import './gestioneSegnalazioni.scss'
 import {
     Alert,
-    Box, Button,
+    Box,
+    Button,
     Card,
-    CardContent, Chip,
-    DialogContent, FormControl, IconButton, InputAdornment, InputLabel,
+    CardContent,
+    Chip,
+    DialogContent,
     List,
     ListItem,
     ListItemButton,
     ListItemIcon,
-    ListItemText, Modal, OutlinedInput, Snackbar, Stack,
+    ListItemText,
+    Modal,
+    Stack,
     Typography
 } from '@mui/material';
 import {useAppDispatch} from 'store/store.config';
 import {segnalazioniAction} from 'store/segnalazioni/segnalazioni.action';
 import {useSelector} from 'react-redux';
 import {segnalazioniSelector} from 'store/segnalazioni/segnalazioni.selector';
-import {Chat, Send} from '@mui/icons-material';
+import {Chat} from '@mui/icons-material';
 import {RequestGestioneSegnalazioneDto, ResponseSegnalazioneDto} from 'models/segnalazioni';
-import {
-    ChatProps
-} from '../../../../../home/components/amiciSection/components/listAmici/components/chat/chat.component';
 import ChatMsg
-    from '../../../../../home/components/amiciSection/components/listAmici/components/chatMsg/chatMsg.component';
+    from 'screens/home/components/amiciSection/components/listAmici/components/chatMsg/chatMsg.component';
 
 interface GestioneSegnalazioniProps {
 }

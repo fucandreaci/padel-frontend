@@ -13,4 +13,5 @@ export enum AdminPages {
     GESTIONE_CAMPI = 'Gestione Campi',
     GESTIONE_TORNEI = 'Gestione Tornei',
     GESTIONE_SEGNALAZIONI = 'Gestione Segnalazioni',
+    GESTIONE_COUPON = 'Gestione Coupon',
 }

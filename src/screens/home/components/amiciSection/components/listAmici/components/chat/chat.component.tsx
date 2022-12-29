@@ -6,7 +6,8 @@ import {
     IconButton,
     InputAdornment,
     InputLabel,
-    OutlinedInput, Snackbar,
+    OutlinedInput,
+    Snackbar,
     Typography
 } from '@mui/material';
 import './chat.scss'
@@ -16,7 +17,6 @@ import {MessaggioOrdinato} from 'models/messaggi';
 import {tokenUtils} from 'utils/token.utils';
 import {Send} from '@mui/icons-material';
 import {messaggiService} from 'api/messaggi.service';
-import {utility} from '../../../../../../../../utils/utility';
 
 export interface ChatProps {
     id: number,

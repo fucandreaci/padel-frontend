@@ -23,6 +23,7 @@ import {HomeAdminSection} from './components/homeAdminSection/homeAdminSection.c
 import {GestioneCampiSection} from './components/gestioneCampiSection/gestioneCampiSection.component';
 import {GestioneTorneiSection} from './components/gestioneTorneiSection/gestioneTorneiSection.component';
 import {GestioneSegnalazioni} from './components/gestioneSegnalazioni/gestioneSegnalazioni.component';
+import {GestioneCouponSection} from './components/gestioneCouponSection/gestioneCouponSection.component';
 
 interface HomeAdminProps {
     window?: () => Window;
@@ -69,8 +70,10 @@ export const HomeAdmin = (props: HomeAdminProps) => {
                 return <GestioneCampiSection/>;
             case AdminPages.GESTIONE_TORNEI:
                 return <GestioneTorneiSection/>;
-                case AdminPages.GESTIONE_SEGNALAZIONI:
-                    return <GestioneSegnalazioni />;
+            case AdminPages.GESTIONE_COUPON:
+                return <GestioneCouponSection/>;
+            case AdminPages.GESTIONE_SEGNALAZIONI:
+                return <GestioneSegnalazioni/>;
             default:
                 return <HomeAdminSection/>;
         }

@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {segnalazioniService} from 'api/segnalazioni.service';
 import {utility} from 'utils/utility';
-import {RequestGestioneSegnalazioneDto} from '../../models/segnalazioni';
+import {RequestGestioneSegnalazioneDto} from 'models/segnalazioni';
 
 export const enum SEGNALAZIONI_ACTION {
     FETCH_SEGNALAZIONI_NON_GESTITE = 'FETCH_SEGNALAZIONI_NON_GESTITE',
