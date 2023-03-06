@@ -6,6 +6,7 @@ import {useAppDispatch} from 'store/store.config';
 import {torneiAction} from 'store/tornei/tornei.action';
 import {useSelector} from 'react-redux';
 import {torneiSelector} from 'store/tornei/tornei.selector';
+import {unwrapResult} from '@reduxjs/toolkit';
 
 interface TorneoDetailProps{
     torneo: ResponseTorneoDto
@@ -33,13 +34,17 @@ export const TorneoDetail = (props: TorneoDetailProps) => {
 
     const onPrenota = async () => {
         setUltimaAzione(UltimaAzione.ISCRIZIONE);
-        await dispatch(torneiAction.iscriviUtente({idTorneo: props.torneo.id}));
+
+        const result = await dispatch(torneiAction.iscriviUtente({idTorneo: props.torneo.id}));
+        await unwrapResult(result);
         setOpenToastSucc(true);
     }
 
     const onRemovePrenotazione = async () => {
         setUltimaAzione(UltimaAzione.DISISCRIZIONE);
-        await dispatch(torneiAction.rimuoviUtente({idTorneo: props.torneo.id}));
+
+        const result = await dispatch(torneiAction.rimuoviUtente({idTorneo: props.torneo.id}));
+        await unwrapResult(result);
         setOpenToastSucc(true);
     }
 
@@ -71,18 +76,25 @@ export const TorneoDetail = (props: TorneoDetailProps) => {
                     <Typography sx={{mb: 1.5}} color="text.secondary">
                         {props.torneo.descrizione}
                     </Typography>
-                    <Chip label={props.torneo.maxPartecipanti - props.torneo.numPartecipanti + ' posti disponibili'} color="primary" variant="outlined" />
+                    <Chip
+                        label={props.torneo.maxPartecipanti - props.torneo.numPartecipanti + ' posti disponibili'}
+                        color={(props.torneo.maxPartecipanti - props.torneo.numPartecipanti) > 0 ? 'primary' : 'error'}
+                        variant="outlined" />
                 </CardContent>
 
-                <CardActions>
-                    {
-                        props.torneo.utentePrenotato ? (
-                            <Button disabled={!props.torneo.prenotazioneAperta} size="small" variant="contained" color="error" onClick={onRemovePrenotazione}>Rimuovi prenotazione</Button>
-                        ) : (
-                            <Button disabled={!props.torneo.prenotazioneAperta} size="small" variant="contained" onClick={onPrenota}>Prenota</Button>
-                        )
-                    }
-                </CardActions>
+                {
+                    ((props.torneo.maxPartecipanti - props.torneo.numPartecipanti) > 0 || props.torneo.utentePrenotato) && (
+                        <CardActions>
+                            {
+                                props.torneo.utentePrenotato ? (
+                                    <Button disabled={!props.torneo.prenotazioneAperta} size="small" variant="contained" color="error" onClick={onRemovePrenotazione}>Rimuovi prenotazione</Button>
+                                ) : (
+                                    <Button disabled={!props.torneo.prenotazioneAperta} size="small" variant="contained" onClick={onPrenota}>Prenota</Button>
+                                )
+                            }
+                        </CardActions>
+                    )
+                }
             </Card>
         </Box>
 

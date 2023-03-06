@@ -74,10 +74,9 @@ export const Chat = forwardRef((props: ChatProps, ref: React.Ref<HTMLDivElement>
                 .then(() => {
                 })
                 .catch((err) => {
-                    console.log(err)
                     setNewMessage('');
                     setOpenToastError(true);
-                    setToastError('Si è verificato un errore: ' + err.response.data);
+                    setToastError('Si è verificato un errore: ' + err.response.data.message);
                     setIsLoading(false);
                 });
         }

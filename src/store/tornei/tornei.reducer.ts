@@ -13,7 +13,8 @@ export const torneiReducer = {
         builder.addCase(torneiAction.fetchTornei.pending, (state, action) => {
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                error: undefined,
             }
         });
 
