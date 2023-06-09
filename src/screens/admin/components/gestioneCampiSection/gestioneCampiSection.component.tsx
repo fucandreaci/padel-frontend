@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import './gestioneCampiSection.scss'
-import {useAppDispatch} from 'store/store.config';
-import {campiAction} from 'store/campi/campi.action';
+import {useAppDispatch} from '../../../../store/store.config';
+import {campiAction} from '../../../../store/campi/campi.action';
 import {useSelector} from 'react-redux';
-import {campiSelector} from 'store/campi/campi.selector';
-import {InfoCard} from 'shared/components/infoCard/infoCard.component';
+import {campiSelector} from '../../../../store/campi/campi.selector';
+import {InfoCard} from '../../../../shared/components/infoCard/infoCard.component';
 import {
     Alert, AlertTitle,
     Button,
@@ -17,7 +17,7 @@ import {
     Typography
 } from '@mui/material';
 import {Add, Delete} from '@mui/icons-material';
-import {ResponseCampoDto} from 'models/campi';
+import {ResponseCampoDto} from '../../../../models/campi';
 import {unwrapResult} from '@reduxjs/toolkit';
 import {AddCampoDialog} from './components/addCampoDialog/addCampoDialog.component';
 

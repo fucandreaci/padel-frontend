@@ -8,3 +8,8 @@ export interface OrariStruttura {
     dalle: string;
     alle: string;
 }
+
+export interface Regola {
+    nome: string;
+    descrizione: string;
+}

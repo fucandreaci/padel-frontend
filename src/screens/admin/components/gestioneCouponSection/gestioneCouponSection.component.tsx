@@ -20,12 +20,12 @@ import {
     Snackbar,
     Typography
 } from '@mui/material';
-import {couponAction} from 'store/coupon/coupon.action';
-import {useAppDispatch} from 'store/store.config';
+import {couponAction} from '../../../../store/coupon/coupon.action';
+import {useAppDispatch} from '../../../../store/store.config';
 import {useSelector} from 'react-redux';
-import {couponSelector} from 'store/coupon/coupon.selector';
+import {couponSelector} from '../../../../store/coupon/coupon.selector';
 import {Add, Delete, Discount} from '@mui/icons-material';
-import {ResponseCouponDto, TipoCoupon} from 'models/coupon';
+import {ResponseCouponDto, TipoCoupon} from '../../../../models/coupon';
 import {unwrapResult} from '@reduxjs/toolkit';
 import {AddCouponDialog} from './components/addCouponDialog/addCouponDialog.component';
 

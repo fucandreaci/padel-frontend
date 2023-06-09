@@ -32,5 +32,30 @@ export const newsReducer = {
                 error: action.error.message
             }
         });
+
+        builder.addCase(newsAction.updateNews.pending, (state, action) => {
+            return {
+                ...state,
+                isLoading: true,
+                error: undefined
+            }
+        });
+
+        builder.addCase(newsAction.updateNews.fulfilled, (state, action) => {
+            return {
+                ...state,
+                news: action.payload,
+                isLoading: false,
+                error: undefined
+            }
+        });
+
+        builder.addCase(newsAction.updateNews.rejected, (state, action) => {
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error.message
+            }
+        });
     })
 }

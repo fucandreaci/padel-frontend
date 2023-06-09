@@ -1,4 +1,4 @@
-import {authService} from 'api/auth.service';
+import {authService} from '../../api/auth.service';
 import {useEffect, useState} from 'react';
 
 export const useCheckAdmin = () => {

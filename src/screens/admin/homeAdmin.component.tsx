@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './homeAdmin.scss'
-import customHistory from 'navigation/customHistory.config';
+import customHistory from '../../navigation/customHistory.config';
 import {useCheckAdmin} from './checkAdmin.hook';
 import {
     AppBar,
@@ -16,14 +16,15 @@ import {
     Toolbar,
     Typography
 } from '@mui/material';
-import {AdminPages} from 'navigation/pages';
+import {AdminPages} from '../../navigation/pages';
 import {Menu} from '@mui/icons-material';
-import {utility} from 'utils/utility';
+import {utility} from '../../utils/utility';
 import {HomeAdminSection} from './components/homeAdminSection/homeAdminSection.component';
 import {GestioneCampiSection} from './components/gestioneCampiSection/gestioneCampiSection.component';
 import {GestioneTorneiSection} from './components/gestioneTorneiSection/gestioneTorneiSection.component';
 import {GestioneSegnalazioni} from './components/gestioneSegnalazioni/gestioneSegnalazioni.component';
 import {GestioneCouponSection} from './components/gestioneCouponSection/gestioneCouponSection.component';
+import {ImpostazioniSection} from './components/impostazioniSection/impostazioniSection.component';
 
 interface HomeAdminProps {
     window?: () => Window;
@@ -84,6 +85,8 @@ export const HomeAdmin = (props: HomeAdminProps) => {
                 return <GestioneCouponSection/>;
             case AdminPages.GESTIONE_SEGNALAZIONI:
                 return <GestioneSegnalazioni/>;
+            case AdminPages.IMPOSTAZIONI:
+                return <ImpostazioniSection />;
             default:
                 return <HomeAdminSection/>;
         }

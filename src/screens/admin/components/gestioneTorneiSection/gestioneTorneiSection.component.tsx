@@ -9,13 +9,13 @@ import {
     DialogTitle, Fab,
     Typography
 } from '@mui/material';
-import {useAppDispatch} from 'store/store.config';
-import {torneiSelector} from 'store/tornei/tornei.selector';
+import {useAppDispatch} from '../../../../store/store.config';
+import {torneiSelector} from '../../../../store/tornei/tornei.selector';
 import {useSelector} from 'react-redux';
-import {torneiAction} from 'store/tornei/tornei.action';
+import {torneiAction} from '../../../../store/tornei/tornei.action';
 import './gestioneTorneiSection.scss'
-import {InfoCard} from 'shared/components/infoCard/infoCard.component';
-import {RequestCreaTorneoDto, RequestModificaTorneoDto, ResponseTorneoDto} from 'models/tornei';
+import {InfoCard} from '../../../../shared/components/infoCard/infoCard.component';
+import {RequestCreaTorneoDto, RequestModificaTorneoDto, ResponseTorneoDto} from '../../../../models/tornei';
 import {EditTorneoPanel} from './components/editTorneoPanel/editTorneoPanel.component';
 import {unwrapResult} from '@reduxjs/toolkit';
 import {DeleteTorneoPanel} from './components/deleteTorneoPanel/deleteTorneoPanel.component';

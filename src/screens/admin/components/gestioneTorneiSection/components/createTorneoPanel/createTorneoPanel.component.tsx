@@ -12,7 +12,7 @@ import {
     TextField
 } from '@mui/material';
 import {Textarea} from '@mui/joy';
-import {RequestCreaTorneoDto} from 'models/tornei';
+import {RequestCreaTorneoDto} from '../../../../../../models/tornei';
 
 interface CreateTorneoPanelProps{
     onClose: () => void;

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './addCampoDialog.scss'
-import imgNotFoundPlaceholder from 'assets/imgNotFoundPlaceholder.png'
+import imgNotFoundPlaceholder from '../../../../../../assets/imgNotFoundPlaceholder.png'
 import {
     Alert,
     Button,
@@ -13,9 +13,9 @@ import {
     Stack,
     TextField
 } from '@mui/material';
-import {RequestCampoDto} from 'models/campi';
-import {useAppDispatch} from 'store/store.config';
-import {campiAction} from 'store/campi/campi.action';
+import {RequestCampoDto} from '../../../../../../models/campi';
+import {useAppDispatch} from '../../../../../../store/store.config';
+import {campiAction} from '../../../../../../store/campi/campi.action';
 import {unwrapResult} from '@reduxjs/toolkit';
 
 interface AddCampoDialogProps {

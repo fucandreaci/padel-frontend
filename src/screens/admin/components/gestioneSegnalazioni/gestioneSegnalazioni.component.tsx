@@ -17,14 +17,14 @@ import {
     Stack,
     Typography
 } from '@mui/material';
-import {useAppDispatch} from 'store/store.config';
-import {segnalazioniAction} from 'store/segnalazioni/segnalazioni.action';
+import {useAppDispatch} from '../../../../store/store.config';
+import {segnalazioniAction} from '../../../../store/segnalazioni/segnalazioni.action';
 import {useSelector} from 'react-redux';
-import {segnalazioniSelector} from 'store/segnalazioni/segnalazioni.selector';
+import {segnalazioniSelector} from '../../../../store/segnalazioni/segnalazioni.selector';
 import {Chat} from '@mui/icons-material';
-import {RequestGestioneSegnalazioneDto, ResponseSegnalazioneDto} from 'models/segnalazioni';
+import {RequestGestioneSegnalazioneDto, ResponseSegnalazioneDto} from '../../../../models/segnalazioni';
 import ChatMsg
-    from 'screens/home/components/amiciSection/components/listAmici/components/chatMsg/chatMsg.component';
+    from '../../../home/components/amiciSection/components/listAmici/components/chatMsg/chatMsg.component';
 
 interface GestioneSegnalazioniProps {
 }

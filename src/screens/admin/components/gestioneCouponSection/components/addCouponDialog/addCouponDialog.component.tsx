@@ -14,10 +14,10 @@ import {
     Stack,
     TextField
 } from '@mui/material';
-import {RequestGenerateCouponDto, TipoCoupon} from 'models/coupon';
-import {useAppDispatch} from 'store/store.config';
+import {RequestGenerateCouponDto, TipoCoupon} from '../../../../../../models/coupon';
+import {useAppDispatch} from '../../../../../../store/store.config';
 import {unwrapResult} from '@reduxjs/toolkit';
-import {couponAction} from 'store/coupon/coupon.action';
+import {couponAction} from '../../../../../../store/coupon/coupon.action';
 
 interface AddCouponDialogProps {
     isOpen: boolean;
