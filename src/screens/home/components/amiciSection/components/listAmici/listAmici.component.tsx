@@ -63,7 +63,7 @@ export const ListAmici = (props: ListAmiciProps) => {
                                                 <Person/>
                                             </ListItemIcon>
                                             <ListItemText
-                                                primary={amico.cognomeAmico + ' ' + amico.nomeAmico + ' ' + amico.idAmico}
+                                                primary={amico.cognomeAmico + ' ' + amico.nomeAmico}
                                                 secondary={amico.accettata === null && (
                                                     <Chip label='In attesa di risposta' color="warning"
                                                           variant="outlined" size="small"/>)}

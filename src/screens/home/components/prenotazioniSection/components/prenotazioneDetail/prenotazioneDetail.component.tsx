@@ -2,7 +2,7 @@ import React from 'react';
 import './prenotazioneDetail.scss'
 import {PrenotazioneType, ResponsePrenotazioneWithTypeDto} from 'models/prenotazioni';
 import {Box, Card, CardContent, Chip, Typography} from '@mui/material';
-import {Discount, SportsTennis} from '@mui/icons-material';
+import {Discount, Euro, EuroSymbol, EuroSymbolRounded, SportsTennis} from '@mui/icons-material';
 import {utility} from 'utils/utility';
 import {TipoCoupon} from 'models/coupon';
 
@@ -75,11 +75,14 @@ export const PrenotazioneDetail = (props: PrenotazioneDetailProps) => {
 
                         <Chip label={props.prenotazione.campo.nome} color="primary" variant="outlined" sx={{mr: 2}}/>
 
+
                         {
                             props.prenotazione.coupon && (
-                                <Chip avatar={<Discount />} label={getCouponValue()} />
+                                <Chip avatar={<Discount />} label={getCouponValue()} sx={{mr: 2}}/>
                             )
                         }
+                        <Chip icon={<Euro/>} label={props.prenotazione.type === PrenotazioneType.PARTITA ? "20" : "25"} style={{fontSize : "18px"}} color="primary" variant="outlined" sx={{mr: 2}}/>
+
 
                         {
                             props.prenotazione.type === PrenotazioneType.LEZIONE_PRIVATA && (

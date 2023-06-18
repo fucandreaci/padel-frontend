@@ -25,6 +25,7 @@ import {GestioneTorneiSection} from './components/gestioneTorneiSection/gestione
 import {GestioneSegnalazioni} from './components/gestioneSegnalazioni/gestioneSegnalazioni.component';
 import {GestioneCouponSection} from './components/gestioneCouponSection/gestioneCouponSection.component';
 import {ImpostazioniSection} from './components/impostazioniSection/impostazioniSection.component';
+import {useAppDispatch} from "../../store/store.config";
 
 interface HomeAdminProps {
     window?: () => Window;
@@ -33,6 +34,7 @@ interface HomeAdminProps {
 const componentClassName = 'home-admin';
 
 export const HomeAdmin = (props: HomeAdminProps) => {
+    const dispatch = useAppDispatch();
     const {window} = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [selectedPage, setSelectedPage] = useState<AdminPages>(AdminPages.HOME);
@@ -64,6 +66,7 @@ export const HomeAdmin = (props: HomeAdminProps) => {
                           onClick={() => {
                               localStorage.removeItem('token');
                               customHistory.push('/login');
+                              dispatch('RESET_STORE');
                           }}>
                     <ListItemButton sx={{textAlign: 'center'}}>
                         <ListItemText primary={'Logout'}/>
