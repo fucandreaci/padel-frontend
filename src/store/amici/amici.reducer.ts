@@ -13,6 +13,7 @@ export const amiciReducer = {
     amici: createReducer(initialState, (builder) => {
         builder.addCase(amiciAction.fetchAmici.pending, (state, action) => {
             return {
+
                 ...state,
                 isLoading: true,
             }
@@ -97,7 +98,7 @@ export const amiciReducer = {
             return {
                 ...state,
                 isLoading: false,
-                amici: action.payload.accettata ? [action.payload, ...state.amici] : [...state.amici],
+                amici: action.payload.accettata ? [action.payload] : [...state.amici],
                 richiesteInAttesa: state.richiesteInAttesa.filter(a => a.idAmico !== action.payload.idAmico),
                 error: undefined
             }

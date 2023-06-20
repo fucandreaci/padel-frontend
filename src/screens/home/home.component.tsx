@@ -26,6 +26,7 @@ import {ContattiSection} from './components/contattiSection/contattiSection.comp
 import {PrenotazioniSection} from './components/prenotazioniSection/prenotazioniSection.component';
 import {AmiciSection} from './components/amiciSection/amiciSection.component';
 import {TorneiSection} from './components/torneiSection/torneiSection.component';
+import {useAppDispatch} from "../../store/store.config";
 
 interface HomeProps{
     window?: () => Window;
@@ -34,6 +35,7 @@ interface HomeProps{
 const componentClassName = 'home';
 
 export const Home = (props: HomeProps) => {
+    const dispatch = useAppDispatch();
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [selectedPage, setSelectedPage] = useState<UserPages>(UserPages.HOME);
@@ -65,6 +67,7 @@ export const Home = (props: HomeProps) => {
                           onClick={() => {
                               localStorage.removeItem('token');
                               customHistory.push('/login');
+                              dispatch('RESET_STORE');
                           }}>
                     <ListItemButton sx={{textAlign: 'center'}}>
                         <ListItemText primary={'Logout'}/>
@@ -129,6 +132,7 @@ export const Home = (props: HomeProps) => {
                                 onClick={() => {
                                     localStorage.removeItem('token');
                                     customHistory.push('/login');
+
                                 }}
                                 disableElevation>
                             Logout

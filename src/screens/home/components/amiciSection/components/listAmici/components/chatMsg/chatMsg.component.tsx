@@ -81,12 +81,11 @@ const ChatMsg = (props: ChatMsgProps) => {
         }
         segnalazioniService.inviaSegnalazione(dto).then(() => {
             setOpenToastSuccess(true);
-        }).catch(e => {
-            const {response} = e as AxiosError
-            if (response && response.data) {
-                const errData = response as { data: string }
+        }).catch((e: any) => {
+            console.log(e)
+            if (e.response.data.message) {
                 setOpenToastError(true);
-                setToastError(errData.data);
+                setToastError(e.response.data.message);
             }
         })
 
