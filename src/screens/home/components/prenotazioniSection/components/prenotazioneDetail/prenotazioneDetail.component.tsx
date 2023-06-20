@@ -1,8 +1,8 @@
 import React from 'react';
 import './prenotazioneDetail.scss'
 import {PrenotazioneType, ResponsePrenotazioneWithTypeDto} from 'models/prenotazioni';
-import {Box, Card, CardContent, Chip, Typography} from '@mui/material';
-import {Discount, Euro, EuroSymbol, EuroSymbolRounded, SportsTennis} from '@mui/icons-material';
+import {Box, Card, CardContent, Chip, IconButton, Typography} from '@mui/material';
+import {Delete, Discount, Euro, SportsTennis} from '@mui/icons-material';
 import {utility} from 'utils/utility';
 import {TipoCoupon} from 'models/coupon';
 
@@ -78,11 +78,11 @@ export const PrenotazioneDetail = (props: PrenotazioneDetailProps) => {
 
                         {
                             props.prenotazione.coupon && (
-                                <Chip avatar={<Discount />} label={getCouponValue()} sx={{mr: 2}}/>
+                                <Chip avatar={<Discount/>} label={getCouponValue()} sx={{mr: 2}}/>
                             )
                         }
-                        <Chip icon={<Euro/>} label={props.prenotazione.type === PrenotazioneType.PARTITA ? "20" : "25"} style={{fontSize : "18px"}} color="primary" variant="outlined" sx={{mr: 2}}/>
-
+                        <Chip icon={<Euro/>} label={props.prenotazione.type === PrenotazioneType.PARTITA ? "20" : "25"}
+                              style={{fontSize: "18px"}} color="primary" variant="outlined" sx={{mr: 2}}/>
 
                         {
                             props.prenotazione.type === PrenotazioneType.LEZIONE_PRIVATA && (
@@ -91,6 +91,16 @@ export const PrenotazioneDetail = (props: PrenotazioneDetailProps) => {
                                 </Typography>
                             )
                         }
+
+                        <div>
+                            <IconButton
+                                color={'error'}
+                                aria-label="Elimina"
+                                sx={{paddingLeft: 0, paddingTop: '16px'}}
+                                onClick={() => -1}>
+                                <Delete/>
+                            </IconButton>
+                        </div>
                     </CardContent>
                 </Card>
             </Box>
