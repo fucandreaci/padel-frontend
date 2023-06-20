@@ -1,15 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './impostazioniSection.scss'
-import {Typography} from '@mui/material';
+import {Alert, Snackbar, Typography} from '@mui/material';
 import {UpdateNews} from './components/updateNews/updateNews.component';
-import {useAppDispatch} from '../../../../store/store.config';
+import {useAppDispatch} from 'store/store.config';
 import {useSelector} from 'react-redux';
-import {newsAction} from '../../../../store/news/news.action';
-import {newsSelector} from '../../../../store/news/news.selector';
-import {infoVarieAction} from '../../../../store/infoVarie/infoVarie.action';
-import {infoVarieSelector} from '../../../../store/infoVarie/infoVarie.selector';
-import {Regola} from '../../../../models/informazioni';
-import {UpdateRegole} from './components/updateRegole/updateRegole.component';
+import {newsAction} from 'store/news/news.action';
+import {newsSelector} from 'store/news/news.selector';
 
 interface ImpostazioniSectionProps {
 }
@@ -19,23 +15,41 @@ const componentClassName = 'impostazioni-section';
 export const ImpostazioniSection = (props: ImpostazioniSectionProps) => {
     const dispatch = useAppDispatch();
 
-    const isNewsLoading = useSelector(newsSelector.isLoading);
-    const isInfoVarieLoading = useSelector(infoVarieSelector.isLoading);
+    const [openToastSuccess, setOpenToastSuccess] = useState(false);
+    const [openToastError, setOpenToastError] = useState<boolean>(false);
+    const [toastError, setToastError] = useState<string>('');
 
+    const isNewsLoading = useSelector(newsSelector.isLoading);
     const news = useSelector(newsSelector.getNews).find(news => news.nome.toLowerCase() === 'news')?.descrizione || '';
-    const regole = useSelector(infoVarieSelector.getRegole) as Regola[];
 
     useEffect(() => {
         dispatch(newsAction.fetchNews());
-        dispatch(infoVarieAction.fetchInfoVarie());
     }, []);
 
-    const updateNews = (text: string) => {
-        dispatch(newsAction.updateNews(text)); // TODO: gestione successo/errore
+    const updateNews = async (text: string) => {
+        try {
+            await dispatch(newsAction.updateNews(text));
+            setOpenToastSuccess(true);
+        } catch(err: any) {
+            setOpenToastError(true);
+            setToastError('Si è verificato un errore: ' + err.response.data.message);
+        }
     }
 
-    const updateRegole = (rules: Regola[]) => {
-        // dispatch(infoVarieAction.updateRegole(rules)); // TODO: gestione successo/errore
+    const handleCloseSucc = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenToastSuccess(false);
+    }
+
+    const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenToastError(false);
     }
 
     return (
@@ -44,13 +58,20 @@ export const ImpostazioniSection = (props: ImpostazioniSectionProps) => {
                 Impostazioni
             </Typography>
 
-            {(!isNewsLoading) && <UpdateNews actualText={news} onUpdate={updateNews}/>}
-            {
-                (!isInfoVarieLoading) && (
-                    <UpdateRegole actualRules={regole} onUpdate={updateRegole}/>
-                )
-            }
+            {!isNewsLoading && <UpdateNews actualText={news} onUpdate={updateNews}/>}
 
+            <Snackbar open={openToastSuccess} autoHideDuration={3000} onClose={handleCloseSucc}
+                      anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
+                <Alert onClose={handleCloseSucc} severity="success" sx={{width: '100%'}}>
+                    News aggiornate con successo
+                </Alert>
+            </Snackbar>
+
+            <Snackbar open={openToastError} autoHideDuration={3000} onClose={handleCloseToast} anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
+                <Alert onClose={handleCloseToast} severity="error" sx={{width: '100%'}}>
+                    {toastError}
+                </Alert>
+            </Snackbar>
         </div>
     )
 };
